@@ -20,7 +20,7 @@
             <td>{{ course.type }}</td>
             <td>{{ course.price }}</td>
             <td>{{ course.capacity }}</td>
-            <td>{{ course.guarantor }}</td>
+            <td>{{ course.get_guarantor().username }}</td>
         </tr>
         {% endfor %}
     </table>
