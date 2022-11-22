@@ -1,8 +1,15 @@
 {% macro render_field(field) %}
     {% with errors = field.errors %}
         <div class="form-group{{ ' has-error' if errors }}">
-            {{ field.label(class="control-label") }}
-            {{ field(class='form-control', **kwargs)|safe }}
+            {% if isinstance(field.widget, tListWidget) %}
+                {% for subfield in field %}
+                    {{ subfield.label(class="control-label") }}
+                    {{ subfield(class='form-control', **kwargs)|safe }}
+                {% endfor %}
+            {% else %}
+                {{ field.label(class="control-label") }}
+                {{ field(class='form-control', **kwargs)|safe }}
+            {% endif %}
             {% if errors %}
                 {% for error in errors %}
                     <span class="help-block">{{ error }}</span>
