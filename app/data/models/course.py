@@ -21,6 +21,10 @@ class Course(db.model, CRUDMixin):
     capacity = db.Column(db.Integer())
     guarantor = db.Column(db.ForeignKey())
 
+    @classmethod
+    def get_all(cls):
+        return Course.query.all()
+
     def get_all_students(self):
         return User.query.join(course_students).filter_by(course_id=self.id).all()
 
