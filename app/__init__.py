@@ -1,4 +1,4 @@
-from flask_wtf import ListWidget
+from wtforms.widgets import ListWidget
 from flask import Flask, g, render_template, request, redirect
 import logging
 import time
