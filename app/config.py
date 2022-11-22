@@ -5,6 +5,8 @@ class base_config(object):
     SERVER_NAME   = 'localhost:5000'
     SITE_NAME     = 'WIS 2'
 
+    SECRET_KEY    = 'tSEYlFqJv9MxtTINBVByKnMDUa3th2X3'
+
     POSTGRES_HOST = 'localhost'
     POSTGRES_PORT = 5432
     POSTGRES_USER = 'iis'
