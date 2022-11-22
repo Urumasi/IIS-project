@@ -79,3 +79,7 @@ ul.navbar-nav > li {
 .keep-height:before {
     content: "\200b";
 }
+
+.big-link {
+    font-size: 26px;
+}
