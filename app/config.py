@@ -2,8 +2,8 @@ from logging import INFO
 
 
 class base_config(object):
-    SERVER_NAME = 'localhost:5000'
-    SITE_NAME = 'IIS'
+    SERVER_NAME   = 'localhost:5000'
+    SITE_NAME     = 'IIS'
 
     POSTGRES_HOST = 'localhost'
     POSTGRES_PORT = 5432
