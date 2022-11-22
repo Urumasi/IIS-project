@@ -13,4 +13,8 @@ def load_user(id):
 
 @public.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("public_index.html")
+
+@public.route('/courses')
+def courses():
+    return render_template("public_courses.html")
