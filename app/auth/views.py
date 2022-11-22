@@ -17,6 +17,13 @@ def my_courses():
     guaranteed_c = Course.get_all_guaranteed_courses(current_user.id)
     return render_template("courses.html",studied_c = studied_c , guaranteed_c = guaranteed_c, taught_c = taught_c)
 
+@auth.route('/course_detail/<id>')
+@login_required
+def course_detail(id):
+    course = Course.get_by_id(id)
+    teachers = course.get_all_lecturers()
+    return render_template("course_detail.html", course = course, teachers = teachers)
+
 @auth.route('/logout')
 @login_required
 def logout():
