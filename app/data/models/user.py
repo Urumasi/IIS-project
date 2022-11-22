@@ -2,9 +2,11 @@ import datetime
 from flask_login import UserMixin
 from sqlalchemy import func
 
-from app.extensions import bcrypt
 from app.data import db
 from app.data.mixins import CRUDMixin
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 
 class User(db.Model, CRUDMixin, UserMixin):

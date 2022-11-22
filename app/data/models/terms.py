@@ -4,6 +4,7 @@ import datetime
 
 
 class Term(db.Model, CRUDMixin):
+    course = db.Column(db.Integer, db.ForeignKey('course.id'))
     name = db.Column(db.String())
     type = db.Column(db.String(length=30))
     description = db.Column(db.String())
