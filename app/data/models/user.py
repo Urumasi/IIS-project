@@ -4,9 +4,7 @@ from sqlalchemy import func
 
 from app.data import db
 from app.data.mixins import CRUDMixin
-from flask_bcrypt import Bcrypt
-
-bcrypt = Bcrypt()
+from app.extensions import bcrypt
 
 
 class User(db.Model, CRUDMixin, UserMixin):
