@@ -7,6 +7,7 @@ from app.extensions import migrate, bcrypt, lm
 from app.data import db
 from app.assets import assets
 from app.public import public
+from app.auth import auth
 
 def create_app(config=config.base_config):
     app = Flask(__name__)
@@ -45,6 +46,7 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(public)
+    app.register_blueprint(auth)
 
 def register_errorhandlers(app):
     def render_error(e):
