@@ -1,6 +1,5 @@
-from app.data import db
+from app.data import db, User, News
 from app.data.mixins import CRUDMixin
-from app.data import User, News
 
 course_students = db.Table('course_students',
                            db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
@@ -25,6 +24,13 @@ class Course(db.Model, CRUDMixin):
     def get_all(cls):
         return Course.query.all()
 
+    @classmethod
+    def get_all_studied_courses(self, id):
+        return Course.query.join(course_students).filter_by(user_id=id).all()
+
+    @classmethod
+    def get_all_taught_courses(self, id):
+        return Course.query.join(course_lecturers).filter_by(user_id=id).all()
 
     def get_guarantor(self):
         return User.query.join(Course).filter(Course.id == self.id).first()
