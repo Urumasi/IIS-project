@@ -1,0 +1,20 @@
+name: Deploy to prod
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          if_key_exists: fail
+      - name: Pull
+        run: ssh -p2200 root@urumasi.xyz "cd /var/www/iis.urumasi.xyz/ && git pull origin master && chown www-data:www-data -R . && systemctl restart gunicorn-iis"
