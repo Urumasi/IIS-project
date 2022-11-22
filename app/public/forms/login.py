@@ -28,7 +28,7 @@ class LoginForm(FlaskForm):
             self.password.errors.append('Incorrect password')
             return False
 
-        if not self.user.active:
+        if not self.user.is_active:
             self.username.errors.append('This user has been disabled by an administrator')
             return False
 
