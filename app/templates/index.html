@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block header %}
+    <h1>FIT Information 2</h1>
 {% endblock %}
 
 {% block body %}
-    <h1>Hello IIS!</h1>
+    {% if current_user.is_authenticated -%}
+    {% else %}
+        <a href="{{ url_for('public.courses') }}">
+            <button>See courses</button>
+        </a> <br>
+        <a href="{{ url_for('public.index') }}">
+            <button>Log in</button>
+        </a>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}

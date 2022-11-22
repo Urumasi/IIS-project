@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title -%}{%- endblock %}</title>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     {% assets "js_all" -%}
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {%- endassets %}
     {% assets "css_all" -%}
         <link rel="stylesheet" href="{{ ASSET_URL }}">
     {%- endassets %}
+    {% block head %}{% endblock %}
 </head>
 <body>
-    {% block header -%}{%- endblock %}
-    {% block body -%}{%- endblock %}
-    {% block footer -%}{%- endblock %}
+    <div class="container">
+        {% include 'components/menu.html' %}
+        <hr>
+        {% block header -%}{%- endblock %}
+        {% block body -%}{%- endblock %}
+        {% block footer -%}{%- endblock %}
+        <hr>
+        <ul class="list-inline text-center">
+            <li><span class="text-muted"><i class="fa fa-clock-o"></i> {{ g.request_time() }}</span></li>
+        </ul>
+    </div>
 </body>
 </html>
