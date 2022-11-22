@@ -1,4 +1,4 @@
-from app.data import db, User, News
+from app.data import db, User, News, Term
 from app.data.mixins import CRUDMixin
 
 course_students = db.Table('course_students',
@@ -47,4 +47,7 @@ class Course(db.Model, CRUDMixin):
         return User.query.join(course_lecturers).filter_by(course_id=self.id).all()
 
     def get_all_news(self):
-        return News.query.join(Course).filter(Course.id == self.id).all()
+        return News.query.filter_by(course=self.id).all()
+
+    def get_all_terms(self):
+        return Term.query.filter_by(course=self.id).all()
