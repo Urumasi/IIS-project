@@ -3,8 +3,9 @@ from flask_login import UserMixin
 from sqlalchemy import func
 
 from app.extensions import bcrypt
-from app.data import db, Course, course_students, course_lecturers
+from app.data import db
 from app.data.mixins import CRUDMixin
+from app.data.models.course import Course, course_students, course_lecturers
 
 
 class User(db.Model, CRUDMixin, UserMixin):
