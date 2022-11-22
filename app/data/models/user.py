@@ -6,6 +6,7 @@ from app.extensions import bcrypt
 from app.data import db
 from app.data.mixins import CRUDMixin
 
+
 class User(db.Model, CRUDMixin, UserMixin):
     username = db.Column(db.String(32), nullable=False)
     pw_hash = db.Column(db.String(256), nullable=False)
@@ -13,6 +14,8 @@ class User(db.Model, CRUDMixin, UserMixin):
         db.DateTime(timezone=True),
         default=datetime.datetime.utcnow
     )
+    is_active = db.Column(db.Boolean(), default=True)
+    is_admin = db.Column(db.Boolean())
 
     def __init__(self, username, password):
         self.username = username
