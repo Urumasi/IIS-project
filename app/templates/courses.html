@@ -1,0 +1,31 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %}
+    <h1>Available courses</h1> 
+{% endblock %}
+
+{% block body %}
+    {% if current_user.is_authenticated -%}
+    {% else %}
+    <table>
+        <tr><th>Course</th><th>Description</th><th>Type</th><th>Price</th><th>Capacity</th><th>Guarantor</th></tr>
+        {% for course in courses %}
+        <tr>
+            <td>{{ course.abbreviation }}</td>
+            <td>{{ course.description }}</td>
+            <td>{{ course.type }}</td>
+            <td>{{ course.price }}</td>
+            <td>{{ course.capacity }}</td>
+            <td>{{ course.guarantor }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
