@@ -22,5 +22,4 @@ class Term(db.Model, CRUDMixin):
     @classmethod
     def get_all_terms_for_user(cls, user_id):
         courses = Course.get_all_studied_courses(user_id)
-        return {course: Term.get_all_news_for_course(course) for course in courses}
-
+        return {course: Term.get_all_terms_for_course(course) for course in courses}
