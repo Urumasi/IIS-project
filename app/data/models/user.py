@@ -2,7 +2,7 @@ import datetime
 from flask_login import UserMixin
 from sqlalchemy import func
 
-from app.data import db
+from app.data import db, Course, News, Term
 from app.data.mixins import CRUDMixin
 from app.extensions import bcrypt
 
@@ -39,3 +39,11 @@ class User(db.Model, CRUDMixin, UserMixin):
     @staticmethod
     def find_by_name(username):
         return User.query.filter(func.lower(User.username) == func.lower(username)).first()
+
+    def get_all_news(self):
+        courses = Course.get_all_studied_courses(self.id)
+        return {course: News.get_all_news_for_course(course) for course in courses}
+
+    def get_all_terms_for_user(self):
+        courses = Course.get_all_studied_courses(self.id)
+        return {course: Term.get_all_terms_for_course(course) for course in courses}
