@@ -8,6 +8,7 @@ from app.data import db
 from app.assets import assets
 from app.public import public
 from app.auth import auth
+from app.admin import admin
 
 
 def create_app(config=config.base_config):
@@ -50,6 +51,7 @@ def register_extensions(app):
 def register_blueprints(app):
     app.register_blueprint(public)
     app.register_blueprint(auth)
+    app.register_blueprint(admin)
 
 
 def register_errorhandlers(app):
