@@ -4,13 +4,64 @@
     {{ config.SITE_NAME }}
 {% endblock %}
 
-{% block header %}
-    <h1>Available courses</h1> 
+{% block header %} 
 {% endblock %}
 
 {% block body %}
     {% if current_user.is_authenticated -%}
+        <h1>Courses I guaratee</h1>
+        {% if guaranteed_c %}
+            <table>
+                <tr><th>Course</th><th>Description</th><th>Type</th><th>Capacity</th></tr>
+                {% for course in guaranteed_c %}
+                    <tr>
+                        <td>{{ course.abbreviation }}</td>
+                        <td>{{ course.description }}</td>
+                        <td>{{ course.type }}</td>
+                        <td>{{ course.capacity }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <a> You don't guarantee any courses </a>
+        {% endif %}
+
+        <h1>Courses I teach</h1>
+        {% if taught_c %}
+        <table>
+            <tr><th>Course</th><th>Description</th><th>Type</th><th>Capacity</th></tr>
+            {% for course in taught_c %}
+                <tr>
+                    <td>{{ course.abbreviation }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.type }}</td>
+                    <td>{{ course.capacity }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <a> You don't teach any courses </a>
+        {% endif %}
+
+        <h1>Courses I study</h1>
+        {% if studied_c %}
+        <table>
+            <tr><th>Course</th><th>Description</th><th>Type</th><th>Capacity</th></tr>
+            {% for course in studied_c %}
+                <tr>
+                    <td>{{ course.abbreviation }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.type }}</td>
+                    <td>{{ course.capacity }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <a> You don't study any courses </a>
+        {% endif %}
+
     {% else %}
+    <h1>Available courses</h1>
     <table>
         <tr><th>Course</th><th>Description</th><th>Type</th><th>Price</th><th>Capacity</th><th>Guarantor</th></tr>
         {% for course in courses %}
