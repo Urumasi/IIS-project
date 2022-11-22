@@ -13,7 +13,7 @@ course_lecturers = db.Table('course_lecturers',
                             )
 
 
-class Course(db.model, CRUDMixin):
+class Course(db.Model, CRUDMixin):
     abbreviation = db.Column(db.String(length=30), nullable=False, unique=True)
     description = db.Column(db.String())
     type = db.Column(db.String())

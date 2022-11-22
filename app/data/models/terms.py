@@ -3,7 +3,7 @@ from app.data.mixins import CRUDMixin
 import datetime
 
 
-class Term(db.model, CRUDMixin):
+class Term(db.Model, CRUDMixin):
     name = db.Column(db.String())
     type = db.Column(db.String(length=30))
     description = db.Column(db.String())
