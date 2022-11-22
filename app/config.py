@@ -1,5 +1,6 @@
 from logging import INFO
 
+
 class base_config(object):
     SERVER_NAME   = 'localhost:5000'
     SITE_NAME     = 'IIS'
@@ -22,6 +23,7 @@ class base_config(object):
     LOG_FORMAT = '[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s'
     LOG_FILEPATH = 'logfile.log'
     LOG_LEVEL = INFO
+
 
 class dev_config(base_config):
     DEBUG = True
