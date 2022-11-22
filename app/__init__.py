@@ -9,6 +9,7 @@ from app.assets import assets
 from app.public import public
 from app.auth import auth
 
+
 def create_app(config=config.base_config):
     app = Flask(__name__)
     app.config.from_object(config)
@@ -19,7 +20,7 @@ def create_app(config=config.base_config):
     file_handler.setLevel(config.LOG_LEVEL)
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
-    #app.logger.addHandler(file_handler)
+    # app.logger.addHandler(file_handler)
 
     register_extensions(app)
     register_blueprints(app)
@@ -37,6 +38,7 @@ def create_app(config=config.base_config):
 
     return app
 
+
 def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
@@ -44,9 +46,11 @@ def register_extensions(app):
     lm.init_app(app)
     assets.init_app(app)
 
+
 def register_blueprints(app):
     app.register_blueprint(public)
     app.register_blueprint(auth)
+
 
 def register_errorhandlers(app):
     def render_error(e):
@@ -56,7 +60,7 @@ def register_errorhandlers(app):
         else:
             app.logger.info(e)
         return f'Error {code}', code
-        #return render_template('errors/%s.html' % code), code
+        # return render_template('errors/%s.html' % code), code
 
     for e in [401, 404, 500]:
         app.errorhandler(e)(render_error)
