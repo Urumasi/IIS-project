@@ -9,7 +9,7 @@ class base_config(object):
     POSTGRES_PORT = 5432
     POSTGRES_USER = 'iis'
     POSTGRES_PASS = 'chob0t3k'
-    POSTGRES_DB   = 'iis'
+    POSTGRES_DB = 'iis'
 
     SQLALCHEMY_DATABASE_URI = 'postgresql://%s:%s@%s:%s/%s' % (
         POSTGRES_USER,

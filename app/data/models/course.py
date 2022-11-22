@@ -18,4 +18,4 @@ class Course(db.model, CRUDMixin):
     type = db.Column(db.String())
     price = db.Column(db.Integer())
     capacity = db.Column(db.Integer())
-    guarantor = db.Column(db.ForeignKey())
+    guarantor = db.Column(db.Integer(), db.ForeignKey('user.id'))
