@@ -1,3 +1,4 @@
+from flask_wtf import ListWidget
 from flask import Flask, g, render_template, request, redirect
 import logging
 import time
@@ -32,6 +33,7 @@ def create_app(config=config.base_config):
     def before_request():
         g.request_start_time = time.time()
         g.request_time = lambda: f'{time.time() - g.request_start_time:.5f}s'
+        g.tListWidget = ListWidget
 
     @app.route('/forceerror')
     def force_error():
