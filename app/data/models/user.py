@@ -14,6 +14,8 @@ class User(db.Model, CRUDMixin, UserMixin):
         db.DateTime(timezone=True),
         default=datetime.datetime.utcnow
     )
+    is_active = db.Column(db.Boolean(), default=True)
+    is_admin = db.Column(db.Boolean())
 
     def __init__(self, username, password):
         self.username = username
