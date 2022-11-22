@@ -24,3 +24,7 @@ def login():
         login_user(form.user)
         return redirect(request.args.get('next') or url_for('public.index'))
     return render_template('login.html', form=form)
+
+@public.route('/courses')
+def courses():
+    return render_template("courses.html", courses = Course.get_all())
