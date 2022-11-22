@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy import func
 
 from app.extensions import bcrypt
-from app.data import db
+from app.data import db, Course, course_students, course_lecturers
 from app.data.mixins import CRUDMixin
 
 
@@ -29,6 +29,12 @@ class User(db.Model, CRUDMixin, UserMixin):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.pw_hash, password.encode('utf-8'))
+
+    def get_all_studied_courses(self):
+        return Course.query.join(course_students).filter_by(user_id=self.id).all()
+
+    def get_all_taught_courses(self):
+        return Course.query.join(course_lecturers).filter_by(user_id=self.id).all()
 
     @staticmethod
     def exists(username):

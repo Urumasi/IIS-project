@@ -1,6 +1,5 @@
-from app.data import db
+from app.data import db, User, News
 from app.data.mixins import CRUDMixin
-from app.data import User, News
 
 course_students = db.Table('course_students',
                            db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
