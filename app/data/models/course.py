@@ -25,6 +25,10 @@ class Course(db.Model, CRUDMixin):
     def get_all(cls):
         return Course.query.all()
 
+
+    def get_guarantor(self):
+        return User.query.join(Course).filter(Course.id == self.id).first()
+
     def get_all_students(self):
         return User.query.join(course_students).filter_by(course_id=self.id).all()
 
