@@ -1,0 +1,16 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %}
+    <h2>Admin panel</h2>
+{% endblock %}
+
+{% block body %}
+    <a class="big-link" href="{{ url_for('admin.new_user') }}">Create new user</a>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
