@@ -17,6 +17,7 @@ def index():
     print(Course.get_all())
     return render_template("index.html")
 
+
 @public.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -24,6 +25,7 @@ def login():
         login_user(form.user)
         return redirect(request.args.get('next') or url_for('public.index'))
     return render_template('login.html', form=form)
+
 
 @public.route('/courses')
 def courses():
