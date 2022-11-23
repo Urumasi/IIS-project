@@ -42,7 +42,10 @@ class User(db.Model, CRUDMixin, UserMixin):
 
     def get_all_news(self):
         from app.data import Course
-        courses = Course.get_all_studied_courses(self.id)
+        courses = set()
+        courses |= set(Course.get_all_studied_courses(self.id))
+        courses |= set(Course.get_all_taught_courses(self.id))
+        courses |= set(Course.get_all_guaranteed_courses(self.id))
         return {course: course.get_all_news() for course in courses}
 
     def get_all_terms(self):
