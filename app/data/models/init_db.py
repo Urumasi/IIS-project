@@ -1,4 +1,3 @@
-import os
 import psycopg2
 import datetime
 from flask_bcrypt import Bcrypt
