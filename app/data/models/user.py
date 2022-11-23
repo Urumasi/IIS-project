@@ -39,3 +39,13 @@ class User(db.Model, CRUDMixin, UserMixin):
     @staticmethod
     def find_by_name(username):
         return User.query.filter(func.lower(User.username) == func.lower(username)).first()
+
+    def get_all_news(self):
+        from app.data import Course
+        courses = Course.get_all_studied_courses(self.id)
+        return {course: course.get_all_news() for course in courses}
+
+    def get_all_terms(self):
+        from app.data import Course
+        courses = Course.get_all_studied_courses(self.id)
+        return {course: course.get_all_terms() for course in courses}

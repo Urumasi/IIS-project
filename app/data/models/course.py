@@ -1,4 +1,4 @@
-from app.data import db, User, News
+from app.data import db
 from app.data.mixins import CRUDMixin
 from sqlalchemy import func
 
@@ -35,20 +35,28 @@ class Course(db.Model, CRUDMixin):
 
     @classmethod
     def get_all_guaranteed_courses(self, id):
+        from app.data import User
         return Course.query.join(User).filter_by(id = id).all()
 
-
     def get_guarantor(self):
+        from app.data import User
         return User.query.join(Course).filter(Course.id == self.id).first()
 
     def get_all_students(self):
+        from app.data import User
         return User.query.join(course_students).filter_by(course_id=self.id).all()
 
     def get_all_lecturers(self):
+        from app.data import User
         return User.query.join(course_lecturers).filter_by(course_id=self.id).all()
 
     def get_all_news(self):
-        return News.query.join(Course).filter(Course.id == self.id).all()
+        from app.data import News
+        return News.query.filter_by(course=self.id).all()
+
+    def get_all_terms(self):
+        from app.data import Term
+        return Term.query.filter_by(course=self.id).all()
 
     @staticmethod
     def exists(abbreviation):

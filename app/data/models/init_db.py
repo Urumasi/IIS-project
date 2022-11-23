@@ -1,4 +1,3 @@
-import os
 import psycopg2
 import datetime
 from flask_bcrypt import Bcrypt
@@ -68,6 +67,13 @@ def course_student(s_id, c_id):
     return
 
 
+def insert_news(course, da_newz, created_ts):
+    cur.execute('INSERT INTO news (course, da_newz, created_ts)'
+                'VALUES (%s, %s, %s)',
+                (course, da_newz, created_ts)
+                )
+
+
 conn = psycopg2.connect(
     host="localhost",
     database="iis",
@@ -106,6 +112,10 @@ course_student(4, 3)
 
 course_lec(2, 2)
 course_lec(2, 3)
+
+insert_news(1, 'Ok zacnete delat projekt', datetime.datetime.now() - datetime.timedelta(days=2))
+insert_news(2, '========================', datetime.datetime.now() - datetime.timedelta(days=1))
+insert_news(1, 'Pls mejte v tom projektu dokumentaci', datetime.datetime.now())
 
 conn.commit()
 cur.close()
