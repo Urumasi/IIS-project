@@ -1,0 +1,23 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %}
+    <h2>Da Newz</h2>
+{% endblock %}
+
+{% block body %}
+    {% for course in newz %}
+        <div>
+            <h3>{{ course.abbreviation }}</h3>
+        {% for newz_item in newz[course] %}
+            <p><span style="color: gray">{{ newz_item.created_ts }}</span> - {{ newz_item.da_newz }}</p>
+        {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

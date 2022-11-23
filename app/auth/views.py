@@ -22,3 +22,10 @@ def my_courses():
 def logout():
     logout_user()
     return redirect(url_for('public.index'))
+
+@auth.route('/my_news')
+@login_required
+def my_news():
+    news = current_user.get_all_news()
+    # Maybe sort them by creation date or something lol
+    return render_template('news_test.html', newz=news)
