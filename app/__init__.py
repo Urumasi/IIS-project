@@ -32,6 +32,10 @@ def create_app(config=config.base_config):
     def before_request():
         g.request_start_time = time.time()
         g.request_time = lambda: f'{time.time() - g.request_start_time:.5f}s'
+    
+    @app.template_filter()
+    def format_datetime(value, format='%Y/%m/%d %H:%M'):
+        return value.strftime(format)
 
     @app.route('/forceerror')
     def force_error():
