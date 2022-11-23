@@ -1,5 +1,6 @@
 from app.data import db
 from app.data.mixins import CRUDMixin
+from sqlalchemy import func
 
 course_students = db.Table('course_students',
                            db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
@@ -56,3 +57,13 @@ class Course(db.Model, CRUDMixin):
     def get_all_terms(self):
         from app.data import Term
         return Term.query.filter_by(course=self.id).all()
+
+    @staticmethod
+    def exists(abbreviation):
+        if Course.find_by_abbr(abbreviation):
+            return True
+        return False
+
+    @staticmethod
+    def find_by_abbr(abbreviation):
+        return Course.query.filter(Course.abbreviation == abbreviation).first()
