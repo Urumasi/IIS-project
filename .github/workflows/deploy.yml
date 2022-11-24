@@ -10,5 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull master and restart gunicorn
-        run: source .github/scripts/deploy.sh "$DEPLOY_KEY"
-        shell: bash
+        run: bash ${GITHUB_WORKSPACE}/scripts/deploy.sh "$DEPLOY_KEY"
