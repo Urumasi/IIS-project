@@ -1,7 +1,7 @@
 eval $(ssh-agent -s)
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
-echo "$1" | tr -d '\r' > ~/.ssh/action_key
+echo "$DEPLOY_KEY" > ~/.ssh/action_key
 chmod 700 ~/.ssh/action_key
 ssh-keyscan -p2200 urumasi.xyz >> ~/.ssh/known_hosts
 chmod 644 ~/.ssh/known_hosts

@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Pull master and restart gunicorn
-        run: bash .github/scripts/deploy.sh "$DEPLOY_KEY"
+        run: bash .github/scripts/deploy.sh
