@@ -9,12 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.DEPLOY_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-          if_key_exists: fail
-      - name: Pull
-        run: ssh -p2200 root@urumasi.xyz "cd /var/www/iis.urumasi.xyz/ && git pull origin master && chown www-data:www-data -R . && systemctl restart gunicorn-iis"
+      - name: Start SSH agent
+        run: eval $(ssh-agent -s)
+      - name: Add deploy key to SSH
+        run: echo "$DEPLOY_KEY" | tr -d '\r' | ssh-add -
+      - name: Ensure .ssh folder
+        run: mkdir -p ~/.ssh
+      - name: chmod .ssh folder
+        run: chmod 700 ~/.ssh
+      - name: Add server keys to known_hosts
+        run: ssh-keyscan -p2200 urumasi.xyz >> ~/.ssh/known_hosts
+      - name: chmod known_hosts
+        run: chmod 644 ~/.ssh/known_hosts
+      - name: Pull from master
+        run: ssh -p2200 iis@urumasi.xyz "cd /var/www/iis.urumasi.xyz/ && git stash && git checkout master && git pull origin master && git stash pop"
+      - name: Restart gunicorn
+        run: ssh -p2200 root@urumasi.xyz "cd /var/www/ && chown www-data:www-data -R iis.urumasi.xyz && systemctl restart gunicorn-iis"
