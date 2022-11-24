@@ -11,4 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Pull master and restart gunicorn
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: bash .github/scripts/deploy.sh
