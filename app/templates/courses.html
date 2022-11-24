@@ -15,7 +15,7 @@
                 <tr><th>Course</th><th>Description</th><th>Type</th><th>Capacity</th></tr>
                 {% for course in guaranteed_c %}
                     <tr>
-                        <td>{{ course.abbreviation }}</td>
+                        <td><a href="{{ url_for('auth.course_detail', id=course.id) }}">{{ course.abbreviation }}</a></td>
                         <td>{{ course.description }}</td>
                         <td>{{ course.type }}</td>
                         <td>{{ course.capacity }}</td>
@@ -32,7 +32,7 @@
             <tr><th>Course</th><th>Description</th><th>Type</th><th>Capacity</th></tr>
             {% for course in taught_c %}
                 <tr>
-                    <td>{{ course.abbreviation }}</td>
+                    <td><a href="{{ url_for('auth.course_detail', id=course.id) }}">{{ course.abbreviation }}</a></td>
                     <td>{{ course.description }}</td>
                     <td>{{ course.type }}</td>
                     <td>{{ course.capacity }}</td>
@@ -49,7 +49,7 @@
             <tr><th>Course</th><th>Description</th><th>Type</th><th>Capacity</th></tr>
             {% for course in studied_c %}
                 <tr>
-                    <td>{{ course.abbreviation }}</td>
+                    <td><a href="{{ url_for('auth.course_detail', id=course.id) }}">{{ course.abbreviation }}</a></td>
                     <td>{{ course.description }}</td>
                     <td>{{ course.type }}</td>
                     <td>{{ course.capacity }}</td>

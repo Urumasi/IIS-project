@@ -38,6 +38,13 @@ def create_course():
     return render_template("course_create.html", form=form)
 
 
+@auth.route('/course_detail/<id>')
+@login_required
+def course_detail(id):
+    course = Course.get_by_id(id)
+    teachers = course.get_all_lecturers()
+    return render_template("course_detail.html", course = course, teachers = teachers)
+
 @auth.route('/logout')
 @login_required
 def logout():

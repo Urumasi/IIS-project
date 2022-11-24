@@ -1,0 +1,27 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ course.abbreviation }}
+{% endblock %}
+
+{% block header %} 
+    <h1>{{ course.abbreviation }}</h1>
+{% endblock %}
+
+{% block body %}
+    <h2>desription: </h2><a>{{ course.description }}</a>
+    <h2>type: </h2><a>{{ course.type }}</a>
+    <h2>capacity: </h2><a>{{ course.capacity }}</a>
+    <h2>guarantor: </h2><a>{{ course.get_guarantor().username }}</a>
+    <h2>teachers: </h2>
+    {% for teacher in teachers %}
+        <a>{{ teacher.username }}, </a>
+    {% endfor %}
+    <table>
+        <tr><th>name</th><th>type</th><th>description</th><th>date</th><th>room</th><th>rathing</th></tr>
+        
+    </table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
