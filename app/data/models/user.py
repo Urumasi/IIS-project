@@ -3,7 +3,6 @@ from flask_login import UserMixin
 from sqlalchemy import func
 
 from app.data import db
-from app.data.models.helper_tables import course_students
 from app.data.mixins import CRUDMixin
 from app.extensions import bcrypt
 
