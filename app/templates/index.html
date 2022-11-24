@@ -13,6 +13,12 @@
         <a href="{{ url_for('auth.my_courses') }}">
             <button>See courses</button>
         </a> <br>
+        <a href="{{ url_for('auth.create_course') }}">
+            <button>Create course</button>
+        </a> <br>
+        <a href="{{ url_for('auth.my_news') }}">
+            <button>See news</button>
+        </a>
     {% else %}
         <a href="{{ url_for('public.courses') }}">
             <button>See courses</button>
