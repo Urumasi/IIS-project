@@ -3,7 +3,6 @@ const APPLY_SUCCESS = '<i class="fa fa-check-circle"></i> Apply';
 const APPLY_FAIL = '<i class="fa fa-times"></i> Apply';
 
 function send_point_update(button, user_id, term, points) {
-    console.log(button, user_id, term, points);
     button.innerHTML = APPLY_LOADING;
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -30,13 +29,10 @@ function send_point_update(button, user_id, term, points) {
 
 function apply_points(self, user_id, term) {
     let input = self.parentNode.parentNode.children[1].children[0];
-    console.log(self);
     if (input.value === '') {
-        console.log('Empty');
         return;
     }
     if (self.busy === true) {
-        console.log('Busy');
         return;
     }
     self.busy = true;
