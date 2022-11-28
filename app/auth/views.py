@@ -3,9 +3,10 @@ from flask_login import login_required, logout_user, current_user
 
 from . import auth
 from app.extensions import lm
+import datetime
 
-from app.data import User, Course, CourseRequest, Term
-from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm
+from app.data import User, Course, CourseRequest, Term, News
+from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm
 
 
 
@@ -71,6 +72,19 @@ def create_term(id):
         )
         return redirect(url_for('auth.course_detail', id=id))
     return render_template("term_create.html", form=form)
+
+@auth.route('/create_news/<id>', methods=['GET', 'POST'])
+@login_required
+def create_news(id):
+    form = CreateNewsForm()
+    if form.validate_on_submit():
+        News.create(
+            course = id,
+            da_newz = form.data["da_newz"],
+            created_ts = datetime.datetime.now()
+        )
+        return redirect(url_for('auth.course_detail', id=id))
+    return render_template("news_create.html", form=form)
 
 
 @auth.route('/profile')

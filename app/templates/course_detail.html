@@ -66,6 +66,11 @@
         <a>there are no news for this course</a>
     {% endif %}
     {% if user_type == "teacher" or user_type == "guaranthor" %}
+    <a href="{{ url_for('auth.create_news', id=course.id) }}">
+        <button>Add news</button>
+    </a>
+    {% endif %}
+    {% if user_type == "teacher" or user_type == "guaranthor" %}
     <h2>registered students:</h2>
         {% if students %}
         <table>
