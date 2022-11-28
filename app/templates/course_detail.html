@@ -17,10 +17,46 @@
     {% for teacher in teachers %}
         <a>{{ teacher.username }}, </a>
     {% endfor %}
+    <h2>terms:</h2>
+    {% if terms %}
+        <table>
+            <tr><th>name</th><th>type</th><th>description</th><th>date</th><th>room</th><th>rathing</th></tr>
+            {% for term in terms %}
+                <td>{{ term.name }}</td>
+                <td>{{ term.type }}</td>
+                <td>{{ term.description }}</td>
+                <td>{{ term.date }}</td>
+                <td>{{ term.room }}</td>
+                <td>{{ term.rathing }}</td>
+            {% endfor %}
+        </table>
+    {% else %}
+        <a>there are no terms for this course</a>
+    {% endif %}
+    <h2>news:</h2>
+    {% if news %}
     <table>
-        <tr><th>name</th><th>type</th><th>description</th><th>date</th><th>room</th><th>rathing</th></tr>
-        
+        <tr><th>message</th><th>created</th></tr>
+        {% for new in news %}
+            <td>{{ new.da_newz }}</td>
+            <td>{{ new.created_ts }}</td>
+            
+        {% endfor %}
     </table>
+    {% else %}
+        <a>there are no news for this course</a>
+    {% endif %}
+    {% if user_type == "teacher" or user_type == "guaranthor" %}
+    <h2>registered students:</h2>
+    <table>
+        <tr><th>login</th><th>points</th></tr>
+        {% for student in students %}
+            <td>{{ student.username }}</td>
+            <td>{{ student.id}}</td>
+            
+        {% endfor %}
+    </table>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}

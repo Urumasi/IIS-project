@@ -29,4 +29,4 @@ def login():
 
 @public.route('/courses')
 def courses():
-    return render_template("courses.html", courses = Course.get_all())
+    return render_template("courses.html", all_c = Course.get_all())
