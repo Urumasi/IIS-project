@@ -32,7 +32,7 @@
                     </td>
                     <td>{{ term.type }}</td>
                     <td>{{ term.description }}</td>
-                    <td>{{ term.date }}</td>
+                    <td>{{ term.date|format_datetime }}</td>
                     <td>{{ term.room }}</td>
                     <td>
                         {% if user_type == "student" %}
@@ -58,7 +58,7 @@
         {% for new in news %}
             <tr>
                 <td>{{ new.da_newz }}</td>
-                <td>{{ new.created_ts }}</td>
+                <td>{{ new.created_ts|format_datetime }}</td>
             </tr>
         {% endfor %}
     </table>

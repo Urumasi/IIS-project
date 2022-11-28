@@ -70,3 +70,12 @@ class Course(db.Model, CRUDMixin):
     def find_by_abbr(abbreviation):
         from app.data import Course
         return Course.query.filter(Course.abbreviation == abbreviation).first()
+
+    def is_taught_by(self, user):
+        if user.id == self.guarantor:
+            return True
+        lecturers = self.get_all_lecturers()
+        for lecturer in lecturers:
+            if lecturer.id == user.id:
+                return True
+        return False
