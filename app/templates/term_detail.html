@@ -1,5 +1,9 @@
 {% extends "_layout.html" %}
 
+{% block head %}
+    <script type="text/javascript" src="/static/bespoke/term_details.js"></script>
+{% endblock %}
+
 {% block title %}
     {{ config.SITE_NAME }}
 {% endblock %}
@@ -21,7 +25,7 @@
             <tr>
                 <td>{{ student.username }}</td>
                 <td><input type="number" size="4" value="{{ term.get_body(student) or '' }}"></td>
-                <td><button><i class="fa fa-check-circle-o"></i> Apply</button></td>
+                <td><button onclick="apply_points()"><i class="fa fa-check-circle-o"></i> Apply</button></td>
             </tr>
         {% endfor %}
     </table>

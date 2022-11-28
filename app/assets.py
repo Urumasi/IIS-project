@@ -1,7 +1,6 @@
 from flask_assets import Bundle, Environment
 
 js = Bundle(
-    'js/test.js',
     filters='jsmin',
     output='gen/packed.js'
 )
