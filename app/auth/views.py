@@ -121,7 +121,7 @@ def api_change_points():
     except ValueError:
         return '{"status": "error", "content": "Invalid term id"}'
     try:
-        points = request.json['points']
+        points = int(request.json['points'])
     except ValueError:
         return '{"status": "error", "content": "Invalid points format"}'
     
