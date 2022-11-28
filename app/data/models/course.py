@@ -75,7 +75,8 @@ class Course(db.Model, CRUDMixin):
         if user.id == self.guarantor:
             return True
         lecturers = self.get_all_lecturers()
-        for lecturer in lecturers:
-            if lecturer.id == user.id:
-                return True
-        return False
+        return any(user.id == lecturer.id for lecturer in lecturers)
+
+    def is_studied_by(self, user):
+        students = self.get_all_students()
+        return any(user.id == student.id for student in students)

@@ -12,6 +12,10 @@ class StudyRequest(db.Model, CRUDMixin):
         default=datetime.datetime.now
     )
 
+    @classmethod
+    def find_existing(user, course):
+        return StudyRequest.query.filter_by(requester=user.id, course=course.id).first()
+
     def accept(self):
         from app.data import course_students
         relation = course_students(

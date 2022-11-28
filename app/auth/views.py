@@ -139,6 +139,21 @@ def my_news():
     # Maybe sort them by creation date or something lol
     return render_template('news_test.html', newz=news)
 
+@auth.route('/register_course/<id>')
+@login_required
+def register_course(id):
+    course = Course.get_by_id(id)
+    if course.is_studied_by(current_user):
+        return redirect('auth.my_courses')
+    request = StudyRequest.find_existing(current_user, course)
+    if request:
+        return redirect('auth.my_courses')
+    StudyRequest.create(
+        requester=current_user.id,
+        course=course.id
+    )
+    return redirect('auth.my_courses')
+
 @auth.route('/study_requests/<id>')
 @login_required
 def study_requests(id):
