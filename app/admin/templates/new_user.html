@@ -1,3 +1,4 @@
+{% from 'components/field.html' import render_field %}
 {% extends "_layout.html" %}
 
 {% block title %}
@@ -9,11 +10,11 @@
 {% endblock %}
 
 {% block body %}
-    <p>Username: [                ]</p>
-    <p>Password: [                ]</p>
-    <p>Confirm:  [                ]</p>
-    <p>[Submit]</p>
-{% endblock %}
-
-{% block footer %}
+    <form method="POST" action="{{ request.url }}">
+        {{ form.csrf_token }}
+        {{ render_field(form.username) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.confirm) }}
+        <button type="submit">Create</button>
+    </form>
 {% endblock %}
