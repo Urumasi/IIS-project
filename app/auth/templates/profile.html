@@ -1,0 +1,17 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %}
+    <h2>Profile</h2>
+{% endblock %}
+
+{% block body %}
+    <b>Username: </b> {{ user.username }} <br/>
+    <a href="{{ url_for('auth.change_password') }}">Change password</a>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -3,8 +3,10 @@ from flask_login import login_required, logout_user, current_user
 
 from . import auth
 from app.extensions import lm
+
 from app.data import User, Course, CourseRequest, Term
-from app.auth.forms import CreateCourseForm
+from app.auth.forms import CreateCourseForm, ChangePasswordForm
+
 
 
 def get_user_type(course_id):
@@ -52,6 +54,23 @@ def create_course():
         )
         return redirect(url_for('auth.my_courses'))
     return render_template("course_create.html", form=form)
+
+
+@auth.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
+
+
+@auth.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm(current_user)
+    if form.validate_on_submit():
+        current_user.set_password(form.data['new_password'])
+        current_user.save()
+        return redirect(url_for('auth.profile'))
+    return render_template("change_password.html", form=form)
 
 
 @auth.route('/course_detail/<id>')

@@ -1,10 +1,10 @@
-from flask import current_app, render_template, redirect, url_for
-from flask_login import current_user
+from flask import render_template, redirect, url_for
 
 from . import admin
 from app.util import admin_required
 from app.extensions import lm
 from app.data import User, CourseRequest
+from app.admin.forms import NewUserForm
 
 @lm.user_loader
 def load_user(id):
@@ -16,10 +16,17 @@ def panel():
     count = CourseRequest.query.count()
     return render_template('panel.html', course_request_count=count)
 
-@admin.route('/admin/new_user')
+@admin.route('/admin/new_user', methods=['GET', 'POST'])
 @admin_required
 def new_user():
-    return render_template('new_user.html')
+    form = NewUserForm()
+    if form.validate_on_submit():
+        User.create(
+            username=form.data['username'],
+            password=form.data['password']
+        )
+        return redirect(url_for('admin.panel'))
+    return render_template("new_user.html", form=form)
 
 @admin.route('/admin/course_requests')
 @admin_required
