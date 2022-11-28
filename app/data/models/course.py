@@ -23,6 +23,7 @@ class Course(db.Model, CRUDMixin):
     auto_accept_students = db.Column(db.Boolean(), default=False)
 
     students = db.relationship('User', secondary=course_students)
+    lecturers = db.relationship('User', secondary=course_lecturers)
 
     @classmethod
     def get_all(cls):
