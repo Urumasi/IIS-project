@@ -4,13 +4,13 @@
     <title>Projekt IIS</title>
     <style type="text/css">
     	table { border-collapse: collapse; }
-    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	td, th { border: 1px solid #000000; padding: 0.3em 0.5em; text-align: left; }
     	dt { font-weight: bold; margin-top: 0.5em; }
     </style>
 </head>
 <body>
 
-<!-- Zkontrolujte prosím nastavení kódování v hlavièce dokumentu 
+<!-- Zkontrolujte prosím nastavení kódování v hlavièce dokumentu
      podle pou¾itého editoru -->
 
 <h1>WIS 2</h1> <!-- Nahradte názvem svého zadání -->
@@ -19,15 +19,15 @@
 	<dt>Autoøi</dt>
 	<dd>Petr Salaba <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xsalab00@stud.fit.vutbr.cz">xsalab00@stud.fit.vutbr.cz</a> -
-		popis èinnosti v týmu
+		správa u¾ivatelù, pøihla¹ování/registrace, tvorba databáze, statistika rychlosti naèítání stránky, zobrazení aktualit, správa produkèního serveru
 	</dd>
 	<dd>Adam Kulla <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xkulla04@stud.fit.vutbr.cz">xkulla04@stud.fit.vutbr.cz</a> -
-		popis èinnosti v týmu
+		tvorba GUI, úvodní strana, zobrazení pøedmìtù, registrace termínù, detaily pøedmìtù, zadávání bodù, testování
 	</dd>
   <dd>Jáchym Postolka <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xposto03@stud.fit.vutbr.cz">xposto03@stud.fit.vutbr.cz</a> -
-		popis èinnosti v týmu
+		tvorba GUI, správa pøedmìtù, testování, dokumentace, plnìní databáze, tvorba modelù
 	</dd>
 	<dt>URL aplikace</dt>
 	<dd><a href="https://www.iis.urumasi.xyz">iis.urumasi.xyz</a></dd>
@@ -37,28 +37,43 @@
 <p>Uveïte prosím existující zástupce <strong>v¹ech rolí u¾ivatelù</strong>.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>xlogin00</td><td>heslo</td><td>Administrátor</td></tr>
-<tr><td>xlogin01</td><td>heslo</td><td>U¾ivatel</td></tr>
-<tr><td>xlogin02</td><td>heslo</td><td>U¾ivatel</td></tr>
-<tr><td>xlogin03</td><td>heslo</td><td>U¾ivatel</td></tr>
-<tr><td>xlogin04</td><td>heslo</td><td>U¾ivatel</td></tr>
-<tr><td>xlogin05</td><td>heslo</td><td>U¾ivatel</td></tr>
-<tr><td>xlogin06</td><td>heslo</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin00</td><td>123</td><td>Administrátor</td></tr>
+<tr><td>xlogin01</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin02</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin03</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin04</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin05</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin06</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin07</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin08</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin09</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin10</td><td>123</td><td>U¾ivatel</td></tr>
+<tr><td>xlogin11</td><td>123</td><td>Deaktivovaný u¾ivatel</td></tr>
 </tbody></table>
 
-<p>(Diagram pøípadù u¾ití není nutné vkládat, pokud IS implementuje role a pøípady u¾ití definované zadáním.)</p> 
+<p></p>
 
 <h3>Video</h3>
 
 <p>Pøilo¾te odkaz na komentované video demostrující pou¾ití informaèního
- systému. Zamìøte se na pøípady u¾ití definované zadáním (napø. 
-registrace u¾ivatele, správa u¾ivatelù a èinnosti jednotlivých rolí). 
-Video nahrajte napøíklad na VUT Google Drive, kde ho bude mo¾né pøímo 
-spustit z odkazu.</p> 
+ systému. Zamìøte se na pøípady u¾ití definované zadáním (napø.
+registrace u¾ivatele, správa u¾ivatelù a èinnosti jednotlivých rolí).
+Video nahrajte napøíklad na VUT Google Drive, kde ho bude mo¾né pøímo
+spustit z odkazu.</p>
 
 <h2>Implementace</h2>
-<p>Struèná dokumentace k implementaci, která popisuje, které èásti 
-projektu (napø. PHP skripty) implementují jednotlivé pøípady pou¾ití.</p>
+<p>Pro implementaci jsme se rozhodli vyu¾ít framework <a href="https://flask.palletsprojects.com/en/2.2.x/">Flask</a>.
+	Backend na¹eho informaèního systému tvoøí Python a frontend se skládá z kombinace HTML a JavaScript.
+	Pro databázi jsme zvolili <a href="https://www.postgresql.org/">Postgres</a>.
+</p>
+<span>Popis jednotlivých èástí projektu</span>
+<ul>
+	<li><i>/app/admin</i>: Pøidávání nových u¾ivatelù a schvalování navrhnutých pøedmìtù - pouze pro u¾ivatele s administrátorským oprávnìním</li>
+	<li><i>/app/auth</i>: Vytváøení nových pøedmìtù, aktualit a termínù, zmìna hesla - pro v¹echny pøihlá¹ené u¾ivatele</li>
+	<li><i>/app/public</i>: Pøihlá¹ení se a zobrazení v¹ech kurzù - obecnì pøístupné</li>
+	<li><i>/app/data</i>: Modely jednotlivýh prvkù databáze</li>
+	<li><i>/app/static</i>: CSS a JS soubory</li>
+</ul>
 
 <h3>Databáze</h3>
 
@@ -66,25 +81,40 @@ Zde vlo¾te grafické schéma relaèní databáze (tabulek v databázi).
 
 <h2>Instalace</h2>
 
-Rozbalte v¹echny soubory na cílovém serveru, spusttì pomocí "flask run".
+Rozbalte v¹echny soubory. V root adresáøi zadejte následující sekvenci pøíkazù:
+<ul>
+	<li>sudo -iu postgres psql</li>
+	<li>CREATE DATABASE iis;</li>
+	<li>CREATE USER iis WITH PASSWORD 'password';</li>
+	<li>GRANT ALL PRIVILEGES ON DATABASE iis TO iis;</li>
+	<li>CREATE USER iis WITH PASSWORD 'password';</li>
+	<li>CREATE USER iis WITH PASSWORD 'password';</li>
+	<li>CREATE USER iis WITH PASSWORD 'password';</li>
+	<li>exit</li>
+	<li>flask db init</li>
+	<li>flask db migrate</li>
+	<li>flask db upgrade</li>
+	<li>python3 init_db.py</li>
+</ul>
+Poté spustítì informaèní systém pøikazem:
+<ul>
+		<li>flask run</li>
+</ul>
 
-softwarové po¾adavky:
+Systém bude spu¹tìn na localhost:5000. Je mo¾né tuto konfiguraci zmìnit upravením souboru config.py v adresáøi app.
+
+
+<h3>Softwarové po¾adavky</h3>
 <ul>
 	<li>python3.8.10</li>
 	<li>pip 22.3.1</li>
+	<li>postgresql</li>
+	<li>postgresql-contrib</li>
 	<li>pip install -r requirements.txt</li>
 </ul>
 
-Inicializace databáze:
-<ul>
-<li>python3 initdb.py</li>
-</ul>
-
 <h2>Známé problémy</h2>
-<p>Zde popi¹te, které body zadání nejsou implementovány a z jakého 
-dùvodu. Napø. &#8222;Z èasových dùvodù nebyla implementována správa 
-u¾ivatelù.&#8221; Pomù¾ete tím zrychlit hodnocení, kdy¾ neimplementované 
-funkce nebudeme muset dlouze hledat.</p>
+<p>.</p>
 
 
 
