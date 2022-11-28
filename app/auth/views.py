@@ -5,14 +5,8 @@ from . import auth
 from app.extensions import lm
 import datetime
 
-<<<<<<< Updated upstream
-from app.data import User, Course, CourseRequest, Term, TermBody, News
+from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody, News
 from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm
-=======
-from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody
-from app.auth.forms import CreateCourseForm, ChangePasswordForm
->>>>>>> Stashed changes
-
 
 
 def get_user_type(course_id):
