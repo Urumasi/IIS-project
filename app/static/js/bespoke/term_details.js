@@ -1,6 +1,6 @@
 const APPLY_LOADING = '<i class="fa fa-spinner"></i> Apply';
 const APPLY_SUCCESS = '<i class="fa fa-check-circle"></i> Apply';
-const APPLY_FAIL = '<i class="fa fa-check-times"></i> Apply';
+const APPLY_FAIL = '<i class="fa fa-times"></i> Apply';
 
 function send_point_update(button, user_id, term, points) {
     console.log(button, user_id, term, points);

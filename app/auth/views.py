@@ -139,7 +139,7 @@ def api_change_points():
     if not course:
         return '{"status": "error", "content": "Course not found"}'
     
-    if not course.is_taught_by(user):
+    if not course.is_taught_by(current_user):
         return '{"status": "error", "content": "Unauthorized access to course"}'
     
     points_object : TermBody = TermBody.get_by_ids(user.id, term.id)
