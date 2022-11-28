@@ -35,7 +35,7 @@ function apply_points(self, user_id, term) {
         console.log('Empty');
         return;
     }
-    if (self.busy !== true) {
+    if (self.busy === true) {
         console.log('Busy');
         return;
     }
