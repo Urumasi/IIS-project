@@ -112,7 +112,7 @@ def course_detail(id):
     terms = course.get_all_terms()
     news = course.get_all_news()
     user_type = get_user_type(course.id)
-    count_study_requests = StudyRequest.query.filter_by(course_id=id).count()
+    count_study_requests = StudyRequest.query.filter_by(course=id).count()
 
     return render_template("course_detail.html", course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
 
@@ -138,10 +138,10 @@ def my_news():
     # Maybe sort them by creation date or something lol
     return render_template('news_test.html', newz=news)
 
-@auth.route('/study_requests')
+@auth.route('/study_requests/<id>')
 @login_required
-def study_requests():
-    requests = StudyRequest.query.all()
+def study_requests(id):
+    requests = StudyRequest.query.filter_by(course=id).all()
     return render_template('study_requests.html', requests=requests)
 
 @auth.route('/accept_study/<id>')
