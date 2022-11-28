@@ -1,0 +1,31 @@
+{% from 'components/field.html' import render_field %}
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %} 
+    <h1>Term detail</h1>
+{% endblock %}
+
+{% block body %}
+    <h2>name:</h2><a>{{term.name}}</a>
+    <h2>type:</h2><a>{{term.type}}</a>
+    <h2>description:</h2><a>{{term.description}}</a>
+    <h2>deadline:</h2><a>{{term.date}}</a>
+    <h2>room:</h2><a>{{term.room}}</a>
+
+    <table>
+        <tr><th>login</th><th>points</th></tr>
+        {% for student in students %}
+            <tr>
+                <td>{{student.username}}</td>
+                <td>{{term.get_body(student)}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

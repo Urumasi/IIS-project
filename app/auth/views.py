@@ -3,9 +3,24 @@ from flask_login import login_required, logout_user, current_user
 
 from . import auth
 from app.extensions import lm
-from app.data import User, Course, CourseRequest
+from app.data import User, Course, CourseRequest, Term
 from app.auth.forms import CreateCourseForm
 
+
+def get_user_type(course_id):
+    course = Course.get_by_id(course_id)
+    teachers = course.get_all_lecturers()
+    students = course.get_all_students()
+    guaranthor = course.get_guarantor()
+
+    if any(x for x in students if x.id == current_user.id):
+        return "student"
+    elif any(x for x in teachers if x.id == current_user.id):
+        return "teacher"
+    elif current_user.id == guaranthor.id:
+        return "guaranthor"   
+    else:
+        return ""
 
 @lm.user_loader
 def load_user(id):
@@ -47,17 +62,18 @@ def course_detail(id):
     students = course.get_all_students()
     terms = course.get_all_terms()
     news = course.get_all_news()
-    guaranthor = course.get_guarantor()
-    user_type = ""
+    user_type = get_user_type(course.id)
 
-    if any(x for x in students if x.id == current_user.id):
-        user_type = "student"
-    elif any(x for x in teachers if x.id == current_user.id):
-        user_type = "teacher"
-    elif current_user.id == guaranthor.id:
-        user_type = "guaranthor"   
-    print(students)
     return render_template("course_detail.html", course = course, teachers = teachers, terms = terms, news = news, user_type = user_type, students = students)
+
+@auth.route('/term_detail/<id>', methods=['GET', 'POST'])
+@login_required
+def term_detail(id):
+    term = Term.get_by_id(id)
+    course = Course.get_by_id(term.course)
+    students = course.get_all_students()
+    user_type = get_user_type(term.course)
+    return render_template("term_detail.html", term = term, user_type = user_type, students = students)
 
 @auth.route('/logout')
 @login_required

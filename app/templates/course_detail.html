@@ -23,12 +23,23 @@
             <tr><th>name</th><th>type</th><th>description</th><th>date</th><th>room</th><th>rathing</th></tr>
             {% for term in terms %}
                 <tr>
-                    <td>{{ term.name }}</td>
+                    <td>
+                        {% if user_type == "teacher" or user_type == "guaranthor" %}
+                            <a href="{{ url_for('auth.term_detail', id=term.id) }}">{{ term.name }}</a>
+                        {% else %}
+                            <a>{{term.name}}</a>
+                        {% endif %}
+                    </td>
                     <td>{{ term.type }}</td>
                     <td>{{ term.description }}</td>
                     <td>{{ term.date }}</td>
                     <td>{{ term.room }}</td>
-                    <td>{{ term.rathing }}</td>
+                    <td>
+                        {% if user_type == "student" %}
+                            {{term.get_body(current_user)}} /
+                        {% endif %}
+                         {{ term.max_body }}
+                    </td>
                 </tr>
             {% endfor %}
         </table>
