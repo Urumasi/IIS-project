@@ -6,7 +6,7 @@ js = Bundle(
 )
 
 js_term = Bundle(
-    'js/bespoke/term_details.js'
+    'js/bespoke/term_details.js',
     filters='jsmin',
     output='gen/term_detail.js'
 )
