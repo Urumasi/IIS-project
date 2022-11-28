@@ -5,7 +5,7 @@ from . import auth
 from app.extensions import lm
 
 from app.data import User, Course, CourseRequest, Term
-from app.auth.forms import CreateCourseForm, ChangePasswordForm
+from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm
 
 
 
@@ -55,6 +55,23 @@ def create_course():
         return redirect(url_for('auth.my_courses'))
     return render_template("course_create.html", form=form)
 
+@auth.route('/create_term/<id>', methods=['GET', 'POST'])
+@login_required
+def create_term(id):
+    form = CreateTermForm()
+    if form.validate_on_submit():
+        Term.create(
+            course = id,
+            name = form.data["name"],
+            type = form.data["type"],
+            description = form.data["description"],
+            date = form.data["date"],
+            room = form.data["room"],
+            max_body = form.data["max_body"]
+        )
+        return redirect(url_for('auth.course_detail', id=id))
+    return render_template("term_create.html", form=form)
+
 
 @auth.route('/profile')
 @login_required
@@ -85,7 +102,7 @@ def course_detail(id):
 
     return render_template("course_detail.html", course = course, teachers = teachers, terms = terms, news = news, user_type = user_type, students = students)
 
-@auth.route('/term_detail/<id>', methods=['GET', 'POST'])
+@auth.route('/term_detail/<id>')
 @login_required
 def term_detail(id):
     term = Term.get_by_id(id)

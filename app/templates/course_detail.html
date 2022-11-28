@@ -20,7 +20,7 @@
     <h2>terms:</h2>
     {% if terms %}
         <table>
-            <tr><th>name</th><th>type</th><th>description</th><th>date</th><th>room</th><th>rathing</th></tr>
+            <tr><th>name</th><th>type</th><th>description</th><th>deadline</th><th>room</th><th>rathing</th></tr>
             {% for term in terms %}
                 <tr>
                     <td>
@@ -45,6 +45,11 @@
         </table>
     {% else %}
         <a>there are no terms for this course</a>
+    {% endif %}
+    {% if user_type == "teacher" or user_type == "guaranthor" %}
+    <a href="{{ url_for('auth.create_term', id=course.id) }}">
+        <button>Add term</button>
+    </a>
     {% endif %}
     <h2>news:</h2>
     {% if news %}
