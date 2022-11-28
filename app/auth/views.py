@@ -144,15 +144,15 @@ def my_news():
 def register_course(id):
     course = Course.get_by_id(id)
     if course.is_studied_by(current_user):
-        return redirect('auth.my_courses')
+        return redirect(url_for('auth.my_courses'))
     request = StudyRequest.find_existing(current_user, course)
     if request:
-        return redirect('auth.my_courses')
+        return redirect(url_for('auth.my_courses'))
     StudyRequest.create(
         requester=current_user.id,
         course=course.id
     )
-    return redirect('auth.my_courses')
+    return redirect(url_for('auth.my_courses'))
 
 @auth.route('/study_requests/<id>')
 @login_required

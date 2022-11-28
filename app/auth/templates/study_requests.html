@@ -24,7 +24,7 @@
                     <tr>
                         {% autoescape true %}
                             <td>{{ request.get_requester().username }}</td>
-                            <td>{{ request.ts_created|format_datetime }}</td>
+                            <td>{{ request.created_ts|format_datetime }}</td>
                             <td><a href="{{ url_for('auth.accept_student', id=request.id) }}">Accept</a></td>
                             <td><a href="{{ url_for('auth.reject_student', id=request.id) }}">Reject</a></td>
                         {% endautoescape %}
