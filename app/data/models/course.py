@@ -20,6 +20,7 @@ class Course(db.Model, CRUDMixin):
     price = db.Column(db.Integer())
     capacity = db.Column(db.Integer())
     guarantor = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    auto_accept_students = db.Column(db.Boolean(), default=False)
 
     @classmethod
     def get_all(cls):

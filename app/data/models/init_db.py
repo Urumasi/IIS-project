@@ -5,7 +5,7 @@ bcrypt = Bcrypt()
 
 
 def trunc_tables():
-    cur.execute('TRUNCATE TABLE public.course, public.news, public.term, public.user RESTART IDENTITY CASCADE;')
+    cur.execute('TRUNCATE TABLE public.course, public.news, public.term, public.user, public.body, public.study_requests, public.course_requests, public.course_students, public.course_lecturers RESTART IDENTITY CASCADE;')
     return
 
 
@@ -19,10 +19,10 @@ def hash_pas(pwd):
     return hasish
 
 
-def insert_course(abbr, descr, type, price, capacity, guarantor):
-    cur.execute('INSERT INTO public.course (abbreviation, description, type, price, capacity, guarantor)'
-                'VALUES (%s, %s, %s, %s, %s, %s)',
-                (abbr, descr, type, price, capacity, guarantor)
+def insert_course(abbr, descr, type, price, capacity, guarantor, auto_accept):
+    cur.execute('INSERT INTO public.course (abbreviation, description, type, price, capacity, guarantor, auto_accept_students)'
+                'VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                (abbr, descr, type, price, capacity, guarantor, auto_accept)
                 )
     return
 
@@ -84,22 +84,22 @@ cur = conn.cursor()
 
 trunc_tables()
 
-insert_user('xkokot00', hash_pas(123), datetime.datetime.utcnow(), True, True)
-insert_user('xkokot01', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot02', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot03', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot04', hash_pas(123), datetime.datetime.utcnow(), True, True)
-insert_user('xkokot05', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot06', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot07', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot08', hash_pas(123), datetime.datetime.utcnow(), True, True)
-insert_user('xkokot09', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot10', hash_pas(123), datetime.datetime.utcnow(), True, False)
-insert_user('xkokot11', hash_pas(123), datetime.datetime.utcnow(), False, False)
+insert_user('xlogin00', hash_pas(123), datetime.datetime.utcnow(), True, True)
+insert_user('xlogin01', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin02', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin03', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin04', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin05', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin06', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin07', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin08', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin09', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin10', hash_pas(123), datetime.datetime.utcnow(), True, False)
+insert_user('xlogin11', hash_pas(123), datetime.datetime.utcnow(), False, False)
 
-insert_course('iis', 'NEJLEPSI predmet na FITu', 'prezencni', 500, 15, 1)
-insert_course('ims', 'druhy NEJLEPSI predmet na FITu', 'prezencni', 500, 15, 2)
-insert_course('isa', 'ze vsech NEJLEPSI predmet na FITu', 'prezencni', 500, 15, 1)
+insert_course('iis', 'NEJLEPSI predmet na FITu', 'prezencni', 500, 15, 1, False)
+insert_course('ims', 'druhy NEJLEPSI predmet na FITu', 'prezencni', 500, 15, 2, True)
+insert_course('isa', 'ze vsech NEJLEPSI predmet na FITu', 'prezencni', 500, 15, 1, False)
 
 course_lec(1, 1)
 course_lec(2, 1)
