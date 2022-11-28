@@ -1,30 +1,24 @@
 {% from 'components/field.html' import render_field %}
 {% extends "_layout.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
 
 {% block header %}
+    <h2>Create new course</h2>
 {% endblock %}
 
 {% block body %}
     <form method="POST" action="{{ request.url }}">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Login</h3>
-            </div>
-            <div class="panel-body">
-                {{ form.csrf_token }}
-                {{ render_field(form.abbreviation) }}
-                {{ render_field(form.description) }}
-                {{ render_field(form.type) }}
-                {{ render_field(form.price) }}
-                {{ render_field(form.capacity) }}
-            </div>
-            <div class="panel-footer">
-                <button type="submit" class="btn btn-default" style="margin-right: 1em;">
-                    <i class="fa fa-sign-in"></i> Create course
-                </button>
-            </div>
-        </div>
+        {{ form.csrf_token }}
+        {{ render_field(form.abbreviation) }}
+        {{ render_field(form.description) }}
+        {{ render_field(form.type) }}
+        {{ render_field(form.price) }}
+        {{ render_field(form.capacity) }}
+        <button type="submit" class="btn btn-default" style="margin-right: 1em;">
+            <i class="fa fa-sign-in"></i> Create course
+        </button>
     </form>
 {% endblock %}

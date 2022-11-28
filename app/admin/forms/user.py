@@ -42,4 +42,4 @@ class NewUserForm(UserForm):
 class EditUserForm(UserForm):
     username = StringField('Username')
     is_admin = BooleanField('Admin')
-    active = BooleanField('Activated')
+    is_active = BooleanField('Activated')
