@@ -22,6 +22,8 @@ class Course(db.Model, CRUDMixin):
     guarantor = db.Column(db.Integer(), db.ForeignKey('user.id'))
     auto_accept_students = db.Column(db.Boolean(), default=False)
 
+    students = db.relationship('User', secondary=course_students)
+
     @classmethod
     def get_all(cls):
         return Course.query.all()

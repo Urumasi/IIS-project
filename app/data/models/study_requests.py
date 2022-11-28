@@ -17,12 +17,11 @@ class StudyRequest(db.Model, CRUDMixin):
         return StudyRequest.query.filter_by(requester=user.id, course=course.id).first()
 
     def accept(self):
-        from app.data import course_students
-        relation = course_students(
-            user_id=self.requester,
-            course_id=self.course
-        )
-        db.session.add(relation)
+        from app.data import Course, User
+        course = Course.get_by_id(self.course)
+        user = User.get_by_id(self.requester)
+        course.students.append(user)
+        db.session.add(course)
         db.session.commit()
         self.delete()
 
