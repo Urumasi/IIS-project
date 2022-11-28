@@ -1,10 +1,10 @@
-from flask import current_app, render_template, redirect, url_for
+from flask import current_app, render_template, redirect, url_for, request
 from flask_login import login_required, logout_user, current_user
 
 from . import auth
 from app.extensions import lm
 
-from app.data import User, Course, CourseRequest, Term
+from app.data import User, Course, CourseRequest, Term, TermBody
 from app.auth.forms import CreateCourseForm, ChangePasswordForm
 
 
@@ -106,3 +106,50 @@ def my_news():
     news = current_user.get_all_news()
     # Maybe sort them by creation date or something lol
     return render_template('news_test.html', newz=news)
+
+@auth.route('/api/change_points', methods=['POST'])
+@login_required
+def api_change_points():
+    if not request.is_json:
+        return '{"status": "error", "content": "Unknown method"}'
+    try:
+        user_id = int(request.json['user'])
+    except ValueError:
+        return '{"status": "error", "content": "Invalid user id"}'
+    try:
+        term_id = int(request.json['term'])
+    except ValueError:
+        return '{"status": "error", "content": "Invalid term id"}'
+    try:
+        points = int(request.json['points'])
+    except ValueError:
+        return '{"status": "error", "content": "Invalid points format"}'
+    
+    term: Term = Term.get_by_id(term_id)
+    if not term:
+        return '{"status": "error", "content": "Term not found"}'
+    user: User = User.get_by_id(user_id)
+    if not user:
+        return '{"status": "error", "content": "User not found"}'
+
+    if points < 0 or points > term.max_body:
+        return '{"status": "error", "content": "Points out of bounds"}'
+
+    course: Course = Course.get_by_id(term.course)
+    if not course:
+        return '{"status": "error", "content": "Course not found"}'
+    
+    if not course.is_taught_by(current_user):
+        return '{"status": "error", "content": "Unauthorized access to course"}'
+    
+    points_object : TermBody = TermBody.get_by_ids(user.id, term.id)
+    if points_object:
+        points_object.body = points
+    else:
+        points_object = TermBody(
+            user_id=user.id,
+            term_id=term.id,
+            body=points
+        )
+    points_object.save()
+    return '{"status": "success", "content": "Points updated"}'

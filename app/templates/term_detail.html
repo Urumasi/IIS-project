@@ -1,5 +1,10 @@
-{% from 'components/field.html' import render_field %}
 {% extends "_layout.html" %}
+
+{% block head %}
+    {% assets "js_term" -%}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {%- endassets %}
+{% endblock %}
 
 {% block title %}
     {{ config.SITE_NAME }}
@@ -13,15 +18,16 @@
     <h2>name:</h2><a>{{term.name}}</a>
     <h2>type:</h2><a>{{term.type}}</a>
     <h2>description:</h2><a>{{term.description}}</a>
-    <h2>deadline:</h2><a>{{term.date}}</a>
+    <h2>deadline:</h2><a>{{term.date|format_datetime}}</a>
     <h2>room:</h2><a>{{term.room}}</a>
 
     <table>
-        <tr><th>login</th><th>points</th></tr>
+        <tr><th>Login</th><th>Points</th><th>Action</th></tr>
         {% for student in students %}
             <tr>
-                <td>{{student.username}}</td>
-                <td>{{term.get_body(student)}}</td>
+                <td>{{ student.username }}</td>
+                <td><input type="number" size="4" value="{{ term.get_body(student) or '' }}"></td>
+                <td><button onclick="apply_points(this, {{ student.id }}, {{ term.id }});"><i class="fa fa-check-circle-o"></i> Apply</button></td>
             </tr>
         {% endfor %}
     </table>
