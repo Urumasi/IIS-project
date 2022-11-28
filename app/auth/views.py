@@ -5,7 +5,7 @@ from . import auth
 from app.extensions import lm
 import datetime
 
-from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody, News
+from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody, News, course_students
 from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm
 
 
@@ -144,7 +144,8 @@ def my_news():
 def study_requests(id):
     course = Course.get_by_id(id)
     requests = StudyRequest.query.filter_by(course=id).all()
-    return render_template('study_requests.html', course=course, requests=requests)
+    count_registered = Course.query.join(course_students).filter_by(course_id=id).count()
+    return render_template('study_requests.html', course=course, requests=requests, count_registered=count_registered)
 
 @auth.route('/accept_study/<id>')
 @login_required
