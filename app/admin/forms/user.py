@@ -8,7 +8,7 @@ from app.data import User
 
 
 def username_is_available(username):
-    if User.if_exists(username):
+    if User.exists(username):
         return False
     return True
 
