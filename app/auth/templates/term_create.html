@@ -1,0 +1,25 @@
+{% from 'components/field.html' import render_field %}
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %}
+    <h2>Create a new term</h2>
+{% endblock %}
+
+{% block body %}
+    <form method="POST" action="{{ request.url }}">
+        {{ form.csrf_token }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.description) }}
+        {{ render_field(form.type) }}
+        {{ render_field(form.date) }}
+        {{ render_field(form.room) }}
+        {{ render_field(form.max_body) }}
+        <button type="submit" class="btn btn-default" style="margin-right: 1em;">
+            <i class="fa fa-sign-in"></i> Create term
+        </button>
+    </form>
+{% endblock %}
