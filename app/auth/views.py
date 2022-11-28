@@ -124,7 +124,7 @@ def course_detail(id):
     user_type = get_user_type(course.id)
     count_study_requests = StudyRequest.query.filter_by(course=id).count()
 
-    return render_template("course_detail.html", course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
+    return render_template("course_detail.html", form=form, course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
 
 @auth.route('/term_detail/<id>')
 @login_required
