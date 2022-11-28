@@ -38,9 +38,10 @@
     <table>
         <tr><th>message</th><th>created</th></tr>
         {% for new in news %}
+        <tr>
             <td>{{ new.da_newz }}</td>
-            <td>{{ new.created_ts }}</td>
-            
+            <td>{{ new.created_ts|format_datetime }}</td>
+        </tr>
         {% endfor %}
     </table>
     {% else %}
@@ -51,9 +52,10 @@
     <table>
         <tr><th>login</th><th>points</th></tr>
         {% for student in students %}
+        <tr>
             <td>{{ student.username }}</td>
             <td>{{ student.id}}</td>
-            
+        </tr>
         {% endfor %}
     </table>
     {% endif %}
