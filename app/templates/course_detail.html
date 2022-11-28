@@ -75,7 +75,7 @@
         {% if user_type == "guaranthor" %}
             <a href="{{ url_for('auth.study_requests', id=course.id) }}">Students requesting access ({{ count_study_requests }})</a>
         {% else %}
-            Not authorized to add students
+            You are {{user_type}}
         {% endif %}
         {% if students %}
         <table>

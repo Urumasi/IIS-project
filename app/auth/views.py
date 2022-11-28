@@ -15,12 +15,13 @@ def get_user_type(course_id):
     students = course.get_all_students()
     guaranthor = course.get_guarantor()
 
-    if any(x for x in students if x.id == current_user.id):
-        return "student"
+
+    if current_user.id == guaranthor.id:
+        return "guaranthor"
     elif any(x for x in teachers if x.id == current_user.id):
         return "teacher"
-    elif current_user.id == guaranthor.id:
-        return "guaranthor"   
+    elif any(x for x in students if x.id == current_user.id):
+        return "student"
     else:
         return ""
 
