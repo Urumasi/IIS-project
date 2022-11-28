@@ -21,8 +21,7 @@ class StudyRequest(db.Model, CRUDMixin):
         course = Course.get_by_id(self.course)
         user = User.get_by_id(self.requester)
         course.students.append(user)
-        db.session.add(course)
-        db.session.commit()
+        course.save()
         self.delete()
 
     def reject(self):

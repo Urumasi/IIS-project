@@ -6,7 +6,7 @@ from app.extensions import lm
 import datetime
 
 from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody, News, course_students
-from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm
+from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm, AddLecturerForm
 
 
 def get_user_type(course_id):
@@ -104,10 +104,19 @@ def change_password():
     return render_template("change_password.html", form=form)
 
 
-@auth.route('/course_detail/<id>')
+@auth.route('/course_detail/<id>', methods=['GET', 'POST'])
 @login_required
 def course_detail(id):
     course = Course.get_by_id(id)
+    form = AddLecturerForm()
+    if form.validate_on_submit():
+        lecturer = User.find_by_name(form.data['username'])
+        if not lecturer:
+            return redirect(url_for('auth.course_detail', id=id))
+        if not course.is_taught_by(lecturer):
+            course.lecturers.append(lecturer)
+            course.save()
+        return redirect(url_for('auth.course_detail', id=id))
     teachers = course.get_all_lecturers()
     students = course.get_all_students()
     terms = course.get_all_terms()
@@ -115,7 +124,7 @@ def course_detail(id):
     user_type = get_user_type(course.id)
     count_study_requests = StudyRequest.query.filter_by(course=id).count()
 
-    return render_template("course_detail.html", course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
+    return render_template("course_detail.html", form=form, course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
 
 @auth.route('/term_detail/<id>')
 @login_required

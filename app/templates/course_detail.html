@@ -1,3 +1,4 @@
+{% from 'components/field.html' import render_field %}
 {% extends "_layout.html" %}
 
 {% block title %}
@@ -17,6 +18,13 @@
     {% for teacher in teachers %}
         <a>{{ teacher.username }}, </a>
     {% endfor %}
+    {% if user_type == "guaranthor" %}
+    <form method="POST" action="{{ request.url }}">
+        {{ form.csrf_token }}
+        {{ render_field(form.username) }}
+        <button type="submit">Add lecturer</button>
+    </form>
+    {% endif %}
     <h2>terms:</h2>
     {% if terms %}
         <table>
@@ -74,8 +82,6 @@
     <h2>registered students:</h2>
         {% if user_type == "guaranthor" %}
             <a href="{{ url_for('auth.study_requests', id=course.id) }}">Students requesting access ({{ count_study_requests }})</a>
-        {% else %}
-            You are {{user_type}}
         {% endif %}
         {% if students %}
         <table>
