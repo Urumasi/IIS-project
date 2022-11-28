@@ -73,7 +73,7 @@
             <td>{{ course.capacity }}</td>
             <td>{{ course.get_guarantor().username }}</td>
             {% if current_user.is_authenticated %}
-                <td><a href="{{url_for('auth.my_courses')}}">
+                <td><a href="{{url_for('auth.register_course', id=course.id)}}">
                     <button>register</button>
                 </a></td>
             {% endif %}
