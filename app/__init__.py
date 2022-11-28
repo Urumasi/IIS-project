@@ -37,6 +37,10 @@ def create_app(config=config.base_config):
     def format_datetime(value, format='%Y/%m/%d %H:%M'):
         return value.strftime(format)
 
+    @app.template_filter()
+    def escape(string):
+        return 
+
     @app.route('/forceerror')
     def force_error():
         return 1/0

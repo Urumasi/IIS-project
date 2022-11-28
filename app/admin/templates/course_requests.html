@@ -1,0 +1,42 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+    {{ config.SITE_NAME }}
+{% endblock %}
+
+{% block header %}
+    <h2>Requested courses</h2>
+{% endblock %}
+
+{% block body %}
+    <table>
+        <thead>
+            <tr>
+                <td>User</td>
+                <td>Abbr.</td>
+                <td>Type</td>
+                <td>Price</td>
+                <td>Cap.</td>
+                <td colspan="2">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    {% autoescape true %}
+                        <td>{{ request.requester.username }}</td>
+                        <td>{{ request.abbreviation }}</td>
+                        <td>{{ request.type }}</td>
+                        <td>{{ request.price }}</td>
+                        <td>{{ request.capacity }}</td>
+                        <td><a href="#">Accept</a></td>
+                        <td><a href="#">Reject</a></td>
+                    {% endautoescape %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
