@@ -16,7 +16,7 @@ def panel():
     count = CourseRequest.query.count()
     return render_template('panel.html', course_request_count=count)
 
-@admin.route('/admin/new_user')
+@admin.route('/admin/new_user', methods=['GET', 'POST'])
 @admin_required
 def new_user():
     form = NewUserForm()
