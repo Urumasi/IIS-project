@@ -142,8 +142,9 @@ def my_news():
 @auth.route('/study_requests/<id>')
 @login_required
 def study_requests(id):
+    course = Course.get_by_id(id)
     requests = StudyRequest.query.filter_by(course=id).all()
-    return render_template('study_requests.html', requests=requests)
+    return render_template('study_requests.html', course=course, requests=requests)
 
 @auth.route('/accept_study/<id>')
 @login_required
