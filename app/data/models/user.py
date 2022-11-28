@@ -52,3 +52,7 @@ class User(db.Model, CRUDMixin, UserMixin):
         from app.data import Course
         courses = Course.get_all_studied_courses(self.id)
         return {course: course.get_all_terms() for course in courses}
+
+    def get_body_for_course(self, course):
+        terms = course.get_all_terms()
+        return sum(filter(None, (term.get_body(self) for term in terms)))
