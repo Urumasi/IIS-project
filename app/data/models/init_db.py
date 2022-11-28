@@ -5,7 +5,7 @@ bcrypt = Bcrypt()
 
 
 def trunc_tables():
-    cur.execute('TRUNCATE TABLE public.course, public.news, public.term, public.user, public.body, public.study_requests, public.course_requests, public.course_students, public.course_lecturers RESTART IDENTITY CASCADE;')
+    cur.execute('TRUNCATE TABLE public.course, public.news, public.term, public.user, public.term_body, public.study_requests, public.course_requests, public.course_students, public.course_lecturers RESTART IDENTITY CASCADE;')
     return
 
 
