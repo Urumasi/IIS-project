@@ -1,7 +1,9 @@
 {% extends "_layout.html" %}
 
 {% block head %}
-    <script type="text/javascript" src="/static/bespoke/term_details.js"></script>
+    {% assets "js_term" -%}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {%- endassets %}
 {% endblock %}
 
 {% block title %}
