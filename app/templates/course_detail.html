@@ -74,6 +74,8 @@
     <h2>registered students:</h2>
         {% if user_type == "guaranthor" %}
             <a href="{{ url_for('auth.study_requests', id=course.id) }}">Students requesting access ({{ count_study_requests }})</a>
+        {% else %}
+            Not authorized to add students
         {% endif %}
         {% if students %}
         <table>
