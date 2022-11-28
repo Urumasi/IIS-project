@@ -30,8 +30,8 @@
                             <td>{{ request.type }}</td>
                             <td>{{ request.price }}</td>
                             <td>{{ request.capacity }}</td>
-                            <td><a href="{{ url_for('admin.accept_course', id=request.id) }}">Accept</a></td>
-                            <td><a href="{{ url_for('admin.reject_course', id=request.id) }}">Reject</a></td>
+                            <td><a href="{{ url_for('admin.accept_course', id=request.id) }}"><button>Accept</button></a></td>
+                            <td><a href="{{ url_for('admin.reject_course', id=request.id) }}"><button>Reject</button></a></td>
                         {% endautoescape %}
                     </tr>
                 {% endfor %}

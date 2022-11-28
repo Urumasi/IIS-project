@@ -167,16 +167,20 @@ def study_requests(id):
 def accept_study(id):
     request = StudyRequest.get_by_id(id)
     if request:
+        cid = request.course
         request.accept()
-    return redirect(url_for('auth.study_requests'))
+        return redirect(url_for('auth.study_requests', id=cid))
+    return redirect(url_for('auth.my_courses'))
 
 @auth.route('/reject_study/<id>')
 @login_required
 def reject_study(id):
     request = StudyRequest.get_by_id(id)
     if request:
+        cid = request.course
         request.reject()
-    return redirect(url_for('auth.study_requests'))
+        return redirect(url_for('auth.study_requests', id=cid))
+    return redirect(url_for('auth.my_courses'))
 
 @auth.route('/api/change_points', methods=['POST'])
 @login_required
