@@ -18,7 +18,8 @@ def my_courses():
     studied_c = Course.get_all_studied_courses(current_user.id)
     taught_c = Course.get_all_taught_courses(current_user.id)
     guaranteed_c = Course.get_all_guaranteed_courses(current_user.id)
-    return render_template("courses.html", studied_c=studied_c, guaranteed_c=guaranteed_c, taught_c=taught_c)
+    all_c = Course.get_all()
+    return render_template("courses.html", studied_c=studied_c, guaranteed_c=guaranteed_c, taught_c=taught_c, all_c = all_c)
 
 
 @auth.route('/create_course', methods=['GET', 'POST'])

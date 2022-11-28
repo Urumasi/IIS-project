@@ -60,11 +60,11 @@
             <a> You don't study any courses </a>
         {% endif %}
 
-    {% else %}
+    {% endif %}
     <h1>Available courses</h1>
     <table>
         <tr><th>Course</th><th>Description</th><th>Type</th><th>Price</th><th>Capacity</th><th>Guarantor</th></tr>
-        {% for course in courses %}
+        {% for course in all_c %}
         <tr>
             <td>{{ course.abbreviation }}</td>
             <td>{{ course.description }}</td>
@@ -72,10 +72,15 @@
             <td>{{ course.price }}</td>
             <td>{{ course.capacity }}</td>
             <td>{{ course.get_guarantor().username }}</td>
+            {% if current_user.is_authenticated %}
+                <td><a href="{{url_for('auth.my_courses')}}">
+                    <button>register</button>
+                </a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
-    {% endif %}
+    
 {% endblock %}
 
 {% block footer %}
