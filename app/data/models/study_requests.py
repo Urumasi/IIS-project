@@ -13,7 +13,7 @@ class StudyRequest(db.Model, CRUDMixin):
     )
 
     @classmethod
-    def find_existing(user, course):
+    def find_existing(cls, user, course):
         return StudyRequest.query.filter_by(requester=user.id, course=course.id).first()
 
     def accept(self):
