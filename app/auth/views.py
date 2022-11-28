@@ -3,7 +3,7 @@ from flask_login import login_required, logout_user, current_user
 
 from . import auth
 from app.extensions import lm
-from app.data import User, Course
+from app.data import User, Course, CourseRequest
 from app.auth.forms import CreateCourseForm
 
 
@@ -27,13 +27,13 @@ def my_courses():
 def create_course():
     form = CreateCourseForm()
     if form.validate_on_submit():
-        Course.create(
+        CourseRequest.create(
+            requester=current_user.id,
             abbreviation=form.data["abbreviation"],
             description=form.data["description"],
             type=form.data["type"],
             price=form.data["price"],
-            capacity=form.data["capacity"],
-            guarantor=current_user.id
+            capacity=form.data["capacity"]
         )
         return redirect(url_for('auth.my_courses'))
     return render_template("course_create.html", form=form)

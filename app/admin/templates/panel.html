@@ -10,6 +10,7 @@
 
 {% block body %}
     <a class="big-link" href="{{ url_for('admin.new_user') }}">Create new user</a>
+    <a class="big-link" href="{{ url_for('admin.course_requests') }}">New course requests ({{ course_request_count }})</a>
 {% endblock %}
 
 {% block footer %}

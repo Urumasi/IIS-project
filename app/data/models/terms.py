@@ -13,4 +13,9 @@ class Term(db.Model, CRUDMixin):
         default=datetime.datetime.utcnow
     )
     room = db.Column(db.String())
-    rathing = db.Column(db.Integer())
+    max_body = db.Column(db.Integer())
+
+    def get_body(self, user):
+        from app.data import term_body
+        result = term_body.query.filter_by(user_id=user.id, term_id=self.id).first()
+        return result.body if result else None
