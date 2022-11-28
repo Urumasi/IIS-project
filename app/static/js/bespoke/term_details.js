@@ -1,3 +1,3 @@
-function apply_points() {
-    console.log(this);
+function apply_points(self) {
+    console.log(self);
 }
