@@ -31,3 +31,7 @@ class CourseRequest(db.Model, CRUDMixin):
 
     def reject(self):
         self.delete()
+
+    def get_requester(self):
+        from app.data import User
+        return User.get_by_id(self.requester)

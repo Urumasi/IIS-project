@@ -83,3 +83,8 @@ ul.navbar-nav > li {
 .big-link {
     font-size: 26px;
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}

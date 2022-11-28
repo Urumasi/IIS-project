@@ -12,25 +12,25 @@
     <table>
         <thead>
             <tr>
-                <td>User</td>
-                <td>Abbr.</td>
-                <td>Type</td>
-                <td>Price</td>
-                <td>Cap.</td>
-                <td colspan="2">Actions</td>
+                <th>User</th>
+                <th>Abbr.</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Cap.</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for request in requests %}
                 <tr>
                     {% autoescape true %}
-                        <td>{{ request.requester.username }}</td>
+                        <td>{{ request.get_requester().username }}</td>
                         <td>{{ request.abbreviation }}</td>
                         <td>{{ request.type }}</td>
                         <td>{{ request.price }}</td>
                         <td>{{ request.capacity }}</td>
-                        <td><a href="#">Accept</a></td>
-                        <td><a href="#">Reject</a></td>
+                        <td><a href="{{ url_for('admin.accept_course', id=request.id) }}">Accept</a></td>
+                        <td><a href="{{ url_for('admin.reject_course', id=request.id) }}">Reject</a></td>
                     {% endautoescape %}
                 </tr>
             {% endfor %}

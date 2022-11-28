@@ -26,3 +26,19 @@ def new_user():
 def course_requests():
     requests = CourseRequest.query.all()
     return render_template('course_requests.html', requests=requests)
+
+@admin.route('/admin/accept_course/<id>')
+@admin_required
+def accept_course(id):
+    request = CourseRequest.get_by_id(id)
+    if request:
+        request.accept()
+    return redirect(url_for('admin.course_requests'))
+
+@admin.route('/admin/reject_course/<id>')
+@admin_required
+def reject_course(id):
+    request = CourseRequest.get_by_id(id)
+    if request:
+        request.reject()
+    return redirect(url_for('admin.course_requests'))
