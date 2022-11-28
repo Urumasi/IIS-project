@@ -22,12 +22,14 @@
         <table>
             <tr><th>name</th><th>type</th><th>description</th><th>date</th><th>room</th><th>rathing</th></tr>
             {% for term in terms %}
-                <td>{{ term.name }}</td>
-                <td>{{ term.type }}</td>
-                <td>{{ term.description }}</td>
-                <td>{{ term.date }}</td>
-                <td>{{ term.room }}</td>
-                <td>{{ term.rathing }}</td>
+                <tr>
+                    <td>{{ term.name }}</td>
+                    <td>{{ term.type }}</td>
+                    <td>{{ term.description }}</td>
+                    <td>{{ term.date }}</td>
+                    <td>{{ term.room }}</td>
+                    <td>{{ term.rathing }}</td>
+                </tr>
             {% endfor %}
         </table>
     {% else %}
@@ -38,9 +40,10 @@
     <table>
         <tr><th>message</th><th>created</th></tr>
         {% for new in news %}
-            <td>{{ new.da_newz }}</td>
-            <td>{{ new.created_ts }}</td>
-            
+            <tr>
+                <td>{{ new.da_newz }}</td>
+                <td>{{ new.created_ts }}</td>
+            </tr>  
         {% endfor %}
     </table>
     {% else %}
@@ -48,14 +51,19 @@
     {% endif %}
     {% if user_type == "teacher" or user_type == "guaranthor" %}
     <h2>registered students:</h2>
-    <table>
-        <tr><th>login</th><th>points</th></tr>
-        {% for student in students %}
-            <td>{{ student.username }}</td>
-            <td>{{ student.id}}</td>
-            
-        {% endfor %}
-    </table>
+        {% if students %}
+        <table>
+            <tr><th>login</th><th>points</th></tr>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.username }}</td>
+                    <td>{{ student.get_body_for_course(course)}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <a>there are no students registered for this course</a>
+        {% endif %}
     {% endif %}
 {% endblock %}
 

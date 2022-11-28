@@ -36,8 +36,8 @@ def insert_news(course, msg):
 
 
 def insert_terms(course, name, t_type, descr, date, room, rath):
-    cur.execute('INSERT INTO public.term (course, name, type, description, date, room, rathing)'
-                'VALUES (%s, %s, %s, %s, %s, %s)',
+    cur.execute('INSERT INTO public.term (course, name, type, description, date, room, max_body)'
+                'VALUES (%s, %s, %s, %s, %s, %s, %s)',
                 (course, name, t_type, descr, date, room, rath)
                 )
     return
@@ -116,6 +116,8 @@ course_lec(2, 3)
 insert_news(1, 'Ok zacnete delat projekt', datetime.datetime.now() - datetime.timedelta(days=2))
 insert_news(2, '========================', datetime.datetime.now() - datetime.timedelta(days=1))
 insert_news(1, 'Pls mejte v tom projektu dokumentaci', datetime.datetime.now())
+
+insert_terms('1', 'projekt', 'projekt','informacny system', datetime.datetime.now(), 'izba tvojej mamy', '69')
 
 conn.commit()
 cur.close()
