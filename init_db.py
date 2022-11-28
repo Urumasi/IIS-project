@@ -117,7 +117,7 @@ insert_news(1, 'Ok zacnete delat projekt', datetime.datetime.now() - datetime.ti
 insert_news(2, '========================', datetime.datetime.now() - datetime.timedelta(days=1))
 insert_news(1, 'Pls mejte v tom projektu dokumentaci', datetime.datetime.now())
 
-insert_terms('1', 'projekt', 'projekt','informacny system', datetime.datetime.now(), 'izba tvojej mamy', '69')
+insert_terms('1', 'projekt', 'projekt','informacny system', datetime.datetime.now(), 'pokoj', '12')
 
 conn.commit()
 cur.close()
