@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block header %}
-    <h2>Requested courses</h2>
+    <h2>Students requested to study {{ course.abbreviation }}</h2>
+    <h3>Registered students: {{ count_registered }}/{{ course.capacity }}</h3>
 {% endblock %}
 
 {% block body %}
@@ -13,11 +14,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>User</th>
-                    <th>Abbr.</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Cap.</th>
+                    <th>Student</th>
+                    <th>Time</th>
                     <th colspan="2">Actions</th>
                 </tr>
             </thead>
@@ -26,12 +24,9 @@
                     <tr>
                         {% autoescape true %}
                             <td>{{ request.get_requester().username }}</td>
-                            <td>{{ request.abbreviation }}</td>
-                            <td>{{ request.type }}</td>
-                            <td>{{ request.price }}</td>
-                            <td>{{ request.capacity }}</td>
-                            <td><a href="{{ url_for('admin.accept_course', id=request.id) }}">Accept</a></td>
-                            <td><a href="{{ url_for('admin.reject_course', id=request.id) }}">Reject</a></td>
+                            <td>{{ request.ts_created|format_datetime }}</td>
+                            <td><a href="{{ url_for('auth.accept_student', id=request.id) }}">Accept</a></td>
+                            <td><a href="{{ url_for('admin.reject_student', id=request.id) }}">Reject</a></td>
                         {% endautoescape %}
                     </tr>
                 {% endfor %}

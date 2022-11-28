@@ -5,8 +5,13 @@ from . import auth
 from app.extensions import lm
 import datetime
 
+<<<<<<< Updated upstream
 from app.data import User, Course, CourseRequest, Term, TermBody, News
 from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm
+=======
+from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody
+from app.auth.forms import CreateCourseForm, ChangePasswordForm
+>>>>>>> Stashed changes
 
 
 
@@ -113,8 +118,9 @@ def course_detail(id):
     terms = course.get_all_terms()
     news = course.get_all_news()
     user_type = get_user_type(course.id)
+    count_study_requests = StudyRequest.query.filter_by(course_id=id).count()
 
-    return render_template("course_detail.html", course = course, teachers = teachers, terms = terms, news = news, user_type = user_type, students = students)
+    return render_template("course_detail.html", course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
 
 @auth.route('/term_detail/<id>')
 @login_required
@@ -137,6 +143,28 @@ def my_news():
     news = current_user.get_all_news()
     # Maybe sort them by creation date or something lol
     return render_template('news_test.html', newz=news)
+
+@auth.route('/study_requests')
+@login_required
+def study_requests():
+    requests = StudyRequest.query.all()
+    return render_template('study_requests.html', requests=requests)
+
+@auth.route('/accept_study/<id>')
+@login_required
+def accept_study(id):
+    request = StudyRequest.get_by_id(id)
+    if request:
+        request.accept()
+    return redirect(url_for('auth.study_requests'))
+
+@auth.route('/reject_study/<id>')
+@login_required
+def reject_study(id):
+    request = StudyRequest.get_by_id(id)
+    if request:
+        request.reject()
+    return redirect(url_for('auth.study_requests'))
 
 @auth.route('/api/change_points', methods=['POST'])
 @login_required
