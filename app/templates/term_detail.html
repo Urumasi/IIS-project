@@ -1,4 +1,3 @@
-{% from 'components/field.html' import render_field %}
 {% extends "_layout.html" %}
 
 {% block title %}
@@ -17,11 +16,12 @@
     <h2>room:</h2><a>{{term.room}}</a>
 
     <table>
-        <tr><th>login</th><th>points</th></tr>
+        <tr><th>Login</th><th>Points</th><th>Action</th></tr>
         {% for student in students %}
             <tr>
-                <td>{{student.username}}</td>
-                <td>{{term.get_body(student)}}</td>
+                <td>{{ student.username }}</td>
+                <td><input type="number" value="{{ term.get_body(student) or '' }}"></td>
+                <td><button><i class="fa fa-check-circle-o"></i> Apply</button></td>
             </tr>
         {% endfor %}
     </table>
