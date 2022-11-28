@@ -16,7 +16,7 @@ class ChangePasswordForm(FlaskForm):
 
     confirm = PasswordField('Confirm password', validators=[
         InputRequired(message="This field is required"),
-        EqualTo('password', message='Passwords must match')
+        EqualTo('new_password', message='Passwords must match')
     ])
 
 
