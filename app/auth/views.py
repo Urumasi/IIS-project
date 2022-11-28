@@ -45,7 +45,7 @@ def profile():
     return render_template('profile.html', user=current_user)
 
 
-@auth.route('/change_password')
+@auth.route('/change_password', methods=['GET', 'POST'])
 @login_required
 def change_password():
     form = ChangePasswordForm(current_user)
