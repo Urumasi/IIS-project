@@ -19,3 +19,6 @@ class Term(db.Model, CRUDMixin):
         from app.data import TermBody
         result = TermBody.query.filter_by(user_id=user.id, term_id=self.id).first()
         return result.body if result else None
+
+    def del_term(self):
+        self.delete()

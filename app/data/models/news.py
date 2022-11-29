@@ -10,3 +10,6 @@ class News(db.Model, CRUDMixin):
         db.DateTime(timezone=True),
         default=datetime.datetime.now
     )
+
+    def del_news(self):
+        self.delete()
