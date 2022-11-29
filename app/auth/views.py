@@ -73,18 +73,31 @@ def create_term(id):
         return redirect(url_for('auth.course_detail', id=id))
     return render_template("term_create.html", form=form)
 
-@auth.route('/create_news/<id>', methods=['GET', 'POST'])
+@auth.route('/create_news/<c_id>/<n_id>', methods=['GET', 'POST'])
 @login_required
-def create_news(id):
-    form = CreateNewsForm()
+def create_news(c_id, n_id):
+    news = News.get_by_id(n_id)
+    if news:
+        form = CreateNewsForm(da_newz=news.da_newz)
+    else:
+        form = CreateNewsForm()
+        
     if form.validate_on_submit():
-        News.create(
-            course = id,
-            da_newz = form.data["da_newz"],
-            created_ts = datetime.datetime.now()
-        )
-        return redirect(url_for('auth.course_detail', id=id))
-    return render_template("news_create.html", form=form)
+        if news:
+            News.update(
+                news,
+                course = c_id,
+                da_newz = form.data["da_newz"],
+                created_ts = datetime.datetime.now()
+            )
+        else:
+            News.create(
+                course = c_id,
+                da_newz = form.data["da_newz"],
+                created_ts = datetime.datetime.now()
+            )
+        return redirect(url_for('auth.course_detail', id=c_id))
+    return render_template("news_create.html", form=form, id=c_id)
 
 
 @auth.route('/profile')
@@ -116,14 +129,28 @@ def course_detail(id):
 
     return render_template("course_detail.html", course = course, teachers = teachers, terms = terms, news = news, user_type = user_type, students = students)
 
-@auth.route('/term_detail/<id>')
+@auth.route('/term_detail/<id>', methods=['GET', 'POST'])
 @login_required
 def term_detail(id):
     term = Term.get_by_id(id)
     course = Course.get_by_id(term.course)
     students = course.get_all_students()
     user_type = get_user_type(term.course)
-    return render_template("term_detail.html", term = term, user_type = user_type, students = students)
+
+    form = CreateTermForm(name=term.name, type=term.type, description=term.description, date=term.date, room=term.room, max_body=term.max_body)
+    if form.validate_on_submit():
+        Term.update(
+            term,
+            course = term.course,
+            name = form.data["name"],
+            type = form.data["type"],
+            description = form.data["description"],
+            date = form.data["date"],
+            room = form.data["room"],
+            max_body = form.data["max_body"]
+        )
+        return redirect(url_for('auth.course_detail', id=term.course))
+    return render_template("term_detail.html", term = term, user_type = user_type, students = students, form=form)
 
 @auth.route('/logout')
 @login_required

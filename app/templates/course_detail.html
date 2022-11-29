@@ -57,7 +57,13 @@
         <tr><th>message</th><th>created</th></tr>
         {% for new in news %}
             <tr>
-                <td>{{ new.da_newz }}</td>
+                <td>
+                    {% if user_type == "teacher" or user_type == "guaranthor" %}
+                        <a href="{{ url_for('auth.create_news', c_id=course.id, n_id=new.id) }}">{{ new.da_newz }}</a>
+                    {% else %}
+                        <a>{{ new.da_newz }}</a>
+                    {% endif %}
+                </td>
                 <td>{{ new.created_ts|format_datetime }}</td>
             </tr>
         {% endfor %}
@@ -66,7 +72,7 @@
         <a>there are no news for this course</a>
     {% endif %}
     {% if user_type == "teacher" or user_type == "guaranthor" %}
-    <a href="{{ url_for('auth.create_news', id=course.id) }}">
+    <a href="{{ url_for('auth.create_news', c_id=course.id, n_id=-1) }}">
         <button>Add news</button>
     </a>
     {% endif %}
