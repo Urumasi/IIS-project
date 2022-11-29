@@ -15,12 +15,18 @@
 {% endblock %}
 
 {% block body %}
-    <h2>name:</h2><a>{{term.name}}</a>
-    <h2>type:</h2><a>{{term.type}}</a>
-    <h2>description:</h2><a>{{term.description}}</a>
-    <h2>deadline:</h2><a>{{term.date|format_datetime}}</a>
-    <h2>room:</h2><a>{{term.room}}</a>
-
+    <form method="POST" action="{{ request.url }}">
+        {{ form.csrf_token }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.description) }}
+        {{ render_field(form.type) }}
+        {{ render_field(form.date) }}
+        {{ render_field(form.room) }}
+        {{ render_field(form.max_body) }}
+        <button type="submit" class="btn btn-default" style="margin-right: 1em;">
+            <i class="fa fa-sign-in"></i> Submt
+        </button>
+    </form>
     <table>
         <tr><th>login</th><th>points</th><th>Action</th></tr>
         {% for student in students %}
