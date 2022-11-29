@@ -172,16 +172,37 @@ def term_detail(id):
     if form.validate_on_submit():
         Term.update(
             term,
-            course = term.course,
-            name = form.data["name"],
-            type = form.data["type"],
-            description = form.data["description"],
-            date = form.data["date"],
-            room = form.data["room"],
-            max_body = form.data["max_body"]
+            course=term.course,
+            name=form.data["name"],
+            type=form.data["type"],
+            description=form.data["description"],
+            date=form.data["date"],
+            room=form.data["room"],
+            max_body=form.data["max_body"]
         )
         return redirect(url_for('auth.course_detail', id=term.course))
-    return render_template("term_detail.html", term = term, user_type = user_type, students = students, form=form)
+    return render_template("term_detail.html", term=term, user_type=user_type, students=students, form=form)
+
+
+@auth.route('/delete_term/<id>')
+@login_required
+def delete_term(id):
+    delete = Term.get_by_id(id)
+    ret = Term.get_by_id(id)
+    if delete:
+        delete.del_term()
+    return redirect(url_for('auth.course_detail', id=ret.course))
+
+
+@auth.route('/delete_news/<id>')
+@login_required
+def delete_news(id):
+    delete = News.get_by_id(id)
+    ret = News.get_by_id(id)
+    if delete:
+        delete.del_news()
+    return redirect(url_for('auth.course_detail', id=ret.course))
+
 
 @auth.route('/logout')
 @login_required
@@ -189,12 +210,14 @@ def logout():
     logout_user()
     return redirect(url_for('public.index'))
 
+
 @auth.route('/my_news')
 @login_required
 def my_news():
     news = current_user.get_all_news()
     # Maybe sort them by creation date or something lol
     return render_template('news_test.html', newz=news)
+
 
 @auth.route('/register_course/<id>')
 @login_required
@@ -238,6 +261,7 @@ def reject_study(id):
         request.reject()
         return redirect(url_for('auth.study_requests', id=cid))
     return redirect(url_for('auth.my_courses'))
+
 
 @auth.route('/api/change_points', methods=['POST'])
 @login_required
