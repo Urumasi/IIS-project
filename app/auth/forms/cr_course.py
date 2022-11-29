@@ -61,3 +61,40 @@ class CreateCourseForm(FlaskForm):
 
         self.abbreviation.errors.append('Course already exists')
         return False
+
+class EditCourseForm(FlaskForm):
+    description = StringField('Description', validators=[DataRequired("This field is required")])
+    type = RadioField('Select type', validators=[DataRequired("This field is required")],
+                      choices=[('in-person', 'In-person'), ('distance', 'Distance')])
+    price = IntegerField('Price',
+                         validators=[DataRequired("This field is required"), NumberRange(min=0, max=2 ** 31 - 1,
+                                                                                         message="Don't "
+                                                                                                 "overflow "
+                                                                                                 "the "
+                                                                                                 "database "
+                                                                                                 "please")])
+    capacity = IntegerField('Capacity', validators=[DataRequired("This field is required"), NumberRange(min=10,
+                                                                                                        max=2 ** 31 - 1,
+                                                                                                        message="Don'"
+                                                                                                                "t "
+                                                                                                                "over"
+                                                                                                                "flow"
+                                                                                                                " "
+                                                                                                                "the "
+                                                                                                                "data"
+                                                                                                                "base"
+                                                                                                                " "
+                                                                                                                "plea"
+                                                                                                                "se"
+                                                                                                        )])
+
+    def __init__(self, *args, **kwargs):
+        FlaskForm.__init__(self, *args, **kwargs)
+        self.course = None
+
+    def validate(self):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+
+        return True

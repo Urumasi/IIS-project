@@ -24,6 +24,9 @@
         {{ render_field(form.username) }}
         <button type="submit">Add lecturer</button>
     </form>
+    <a href="{{ url_for('auth.edit_course', id=course.id) }}">
+        <button>Edit details</button>
+    </a> 
     {% endif %}
     <h2>terms:</h2>
     {% if terms %}
