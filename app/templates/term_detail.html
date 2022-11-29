@@ -1,5 +1,10 @@
-{% from 'components/field.html' import render_field %}
 {% extends "_layout.html" %}
+
+{% block head %}
+    {% assets "js_term" -%}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {%- endassets %}
+{% endblock %}
 
 {% block title %}
     {{ config.SITE_NAME }}
@@ -22,13 +27,13 @@
             <i class="fa fa-sign-in"></i> Submt
         </button>
     </form>
-
     <table>
-        <tr><th>login</th><th>points</th></tr>
+        <tr><th>login</th><th>points</th><th>Action</th></tr>
         {% for student in students %}
             <tr>
-                <td>{{student.username}}</td>
-                <td>{{term.get_body(student)}}</td>
+                <td>{{ student.username }}</td>
+                <td><input type="number" size="4" value="{{ term.get_body(student) or '' }}"></td>
+                <td><button onclick="apply_points(this, {{ student.id }}, {{ term.id }});"><i class="fa fa-check-circle-o"></i> Apply</button></td>
             </tr>
         {% endfor %}
     </table>

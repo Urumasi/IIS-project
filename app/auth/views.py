@@ -5,9 +5,8 @@ from . import auth
 from app.extensions import lm
 import datetime
 
-from app.data import User, Course, CourseRequest, Term, TermBody, News
-from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm
-
+from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody, News, course_students
+from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm, AddLecturerForm
 
 
 def get_user_type(course_id):
@@ -16,12 +15,13 @@ def get_user_type(course_id):
     students = course.get_all_students()
     guaranthor = course.get_guarantor()
 
-    if any(x for x in students if x.id == current_user.id):
-        return "student"
+
+    if current_user.id == guaranthor.id:
+        return "guaranthor"
     elif any(x for x in teachers if x.id == current_user.id):
         return "teacher"
-    elif current_user.id == guaranthor.id:
-        return "guaranthor"   
+    elif any(x for x in students if x.id == current_user.id):
+        return "student"
     else:
         return ""
 
@@ -117,17 +117,27 @@ def change_password():
     return render_template("change_password.html", form=form)
 
 
-@auth.route('/course_detail/<id>')
+@auth.route('/course_detail/<id>', methods=['GET', 'POST'])
 @login_required
 def course_detail(id):
     course = Course.get_by_id(id)
+    form = AddLecturerForm()
+    if form.validate_on_submit():
+        lecturer = User.find_by_name(form.data['username'])
+        if not lecturer:
+            return redirect(url_for('auth.course_detail', id=id))
+        if not course.is_taught_by(lecturer):
+            course.lecturers.append(lecturer)
+            course.save()
+        return redirect(url_for('auth.course_detail', id=id))
     teachers = course.get_all_lecturers()
     students = course.get_all_students()
     terms = course.get_all_terms()
     news = course.get_all_news()
     user_type = get_user_type(course.id)
+    count_study_requests = StudyRequest.query.filter_by(course=id).count()
 
-    return render_template("course_detail.html", course = course, teachers = teachers, terms = terms, news = news, user_type = user_type, students = students)
+    return render_template("course_detail.html", form=form, course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
 
 @auth.route('/term_detail/<id>', methods=['GET', 'POST'])
 @login_required
@@ -164,6 +174,49 @@ def my_news():
     news = current_user.get_all_news()
     # Maybe sort them by creation date or something lol
     return render_template('news_test.html', newz=news)
+
+@auth.route('/register_course/<id>')
+@login_required
+def register_course(id):
+    course = Course.get_by_id(id)
+    if course.is_studied_by(current_user):
+        return redirect(url_for('auth.my_courses'))
+    request = StudyRequest.find_existing(current_user, course)
+    if request:
+        return redirect(url_for('auth.my_courses'))
+    StudyRequest.create(
+        requester=current_user.id,
+        course=course.id
+    )
+    return redirect(url_for('auth.my_courses'))
+
+@auth.route('/study_requests/<id>')
+@login_required
+def study_requests(id):
+    course = Course.get_by_id(id)
+    requests = StudyRequest.query.filter_by(course=id).all()
+    count_registered = Course.query.join(course_students).filter_by(course_id=id).count()
+    return render_template('study_requests.html', course=course, requests=requests, count_registered=count_registered)
+
+@auth.route('/accept_study/<id>')
+@login_required
+def accept_study(id):
+    request = StudyRequest.get_by_id(id)
+    if request:
+        cid = request.course
+        request.accept()
+        return redirect(url_for('auth.study_requests', id=cid))
+    return redirect(url_for('auth.my_courses'))
+
+@auth.route('/reject_study/<id>')
+@login_required
+def reject_study(id):
+    request = StudyRequest.get_by_id(id)
+    if request:
+        cid = request.course
+        request.reject()
+        return redirect(url_for('auth.study_requests', id=cid))
+    return redirect(url_for('auth.my_courses'))
 
 @auth.route('/api/change_points', methods=['POST'])
 @login_required
