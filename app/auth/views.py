@@ -6,7 +6,7 @@ from app.extensions import lm
 import datetime
 
 from app.data import User, Course, CourseRequest, StudyRequest, Term, TermBody, News, course_students
-from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm, AddLecturerForm
+from app.auth.forms import CreateCourseForm, ChangePasswordForm, CreateTermForm, CreateNewsForm, AddLecturerForm, EditCourseForm
 
 
 def get_user_type(course_id):
@@ -138,6 +138,27 @@ def course_detail(id):
     count_study_requests = StudyRequest.query.filter_by(course=id).count()
 
     return render_template("course_detail.html", form=form, course=course, teachers=teachers, terms=terms, news=news, user_type=user_type, students=students, count_study_requests=count_study_requests)
+
+@auth.route('/edit_course/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_course(id):
+    course = Course.get_by_id(id)
+    print(course.type)
+    if course.type == 'in-person':
+        select = 'in-person'
+    else:
+        select = 'distance'
+    form = EditCourseForm(description=course.description, type=select, price=course.price, capacity=course.capacity)
+    if form.validate_on_submit():
+        Course.update(
+            course,
+            description = form.data["description"],
+            type = form.data["type"],
+            price = form.data["price"],
+            capacity = form.data["capacity"],
+        )
+        return redirect(url_for('auth.course_detail', id=id))
+    return render_template("course_edit.html", form=form)
 
 @auth.route('/term_detail/<id>', methods=['GET', 'POST'])
 @login_required
